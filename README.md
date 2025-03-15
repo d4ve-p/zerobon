@@ -1,1 +1,2 @@
 # zerobon
+# show items
