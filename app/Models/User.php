@@ -4,9 +4,10 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -48,13 +50,20 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's initials
+     * Relationships
      */
-    public function initials(): string
+    /**
+     * Get user shopping cart
+     */
+    function cart(): HasOne
     {
-        return Str::of($this->name)
-            ->explode(' ')
-            ->map(fn (string $name) => Str::of($name)->substr(0, 1))
-            ->implode('');
+        return $this->hasOne(Cart::class);
+    }
+    /**
+     * Get user's purchases
+     */
+    function purchases(): HasMany
+    {
+        return $this->hasMany(Purchase::class);
     }
 }
