@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\CreateProduct;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -10,6 +11,13 @@ Route::get('/', function () {
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+// Products
+Route::view('products', 'products.products')
+    ->name('products');
+Route::view('products/create', 'products.create-product')
+    ->name('create-product');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
