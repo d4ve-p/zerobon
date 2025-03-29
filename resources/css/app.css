@@ -58,6 +58,16 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
 }
 
+.form-component {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-component input[type="text"], input[type="number"] {
+    outline: none;
+    border: solid black 1px;
+}
+
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */

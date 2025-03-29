@@ -10,7 +10,7 @@
     </div>
     {{-- Content --}}
     <div class="flex-1">
-        Ini content
+        @yield('content')
     </div>
     {{-- Footer --}}
     <div>
