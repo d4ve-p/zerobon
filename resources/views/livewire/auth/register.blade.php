@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-6">
-    <form wire:submit="register" class="flex flex-col gap-6">
+    <form wire:submit.prevent="register" class="flex flex-col gap-6">
         <!-- Password -->
         <div class="form-component">
             <label for="name">Name</label>
