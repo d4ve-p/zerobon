@@ -18,6 +18,11 @@ use Livewire\Volt\Volt;
 //         ->name('password.reset');
 // });
 
+// Login Register
+// TODO: Implement guest middleware
+Route::view('login', 'auth.login')->name('login');
+Route::view('register', 'auth.register')->name('register');
+
 Route::middleware('auth')->group(function () {
     Volt::route('verify-email', 'auth.verify-email')
         ->name('verification.notice');
