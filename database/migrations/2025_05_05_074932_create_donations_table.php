@@ -25,7 +25,7 @@ return new class extends Migration
             /**
              * Foreign constraints
              */
-            $table->foreign('user')->references('id')->on('users');
+            $table->foreign('userId')->references('id')->on('users');
 
         });
     }
