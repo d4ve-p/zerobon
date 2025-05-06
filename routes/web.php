@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProductController;
 use App\Livewire\CreateProduct;
 use Illuminate\Support\Facades\Route;
@@ -84,9 +85,9 @@ Route::middleware(['auth'])->group(function() {
 
     // Donation
     Route::prefix('donation')->group(function() {
-        Route::get('/', function() {})
+        Route::get('/', [ DonationController::class, 'donations' ])
             ->name('donate');
-        Route::post('/', function() {})
+        Route::post('/', [ DonationController::class, 'donate' ])
             ->name('donate-post');
     });
 
