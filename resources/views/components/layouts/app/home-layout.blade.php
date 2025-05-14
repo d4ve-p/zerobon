@@ -5,9 +5,7 @@
 </head>
 <body class="w-screen min-h-screen flex flex-col">
     {{-- Header --}}
-    <div>
-        @include('components.layouts.app.header')
-    </div>
+     @include('components.layouts.app.header')
     {{-- Content --}}
     <div class="flex-1">
         @yield('content')
