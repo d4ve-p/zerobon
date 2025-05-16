@@ -3,7 +3,7 @@
 <head>
     @include('partials.head')
 </head>
-<body class="w-screen min-h-screen flex flex-col">
+<body class="w-screen min-h-screen flex flex-col overflow-x-hidden box-border">
     {{-- Header --}}
      @include('components.layouts.app.header')
     {{-- Content --}}

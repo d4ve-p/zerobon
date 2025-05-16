@@ -1,6 +1,6 @@
-<div class="w-screen h-[90px] px-5 py-3 flex justify-between box-border relative">
+<div class="w-full h-[90px] py-3 flex justify-between box-border relative px-5">
     <img src="{{ asset('logo.png') }}" />
-    <div class="flex gap-3 items-center font-poppins text-[var(--color-green-700)] font-extrabold justify-center gap-[20px]">
+    <div class="flex items-center font-poppins text-[var(--color-green-700)] font-extrabold justify-center gap-[20px]">
         <p>Home</p>
         <p>Calculator</p>
         <p>News</p>
