@@ -40,13 +40,13 @@ Route::prefix('social-activities')->group(function() {
     Route::get('/', function() { })
         ->name('social-activities');
 });
-
+// Carts
+Route::prefix('carts')->group(function() {
+    Route::view('/', 'carts.cart')
+    ->name('carts');
+});
 Route::middleware(['auth'])->group(function() {
-    // Carts
-    Route::prefix('carts')->group(function() {
-        Route::view('/', function() { })
-        ->name('carts');
-    });
+
 
 
     // Purchases
