@@ -2,6 +2,51 @@
 
 {{-- TODO: Apply logic and remove temporary hidden --}}
 @section('content')
+{{-- Choose Voucher --}}
+{{-- Choosing voucher form should be in the same one as checkout --}}
+<div id="voucher-overlay" class="fixed w-screen h-screen top-0 hidden">
+    <form>
+    {{-- Transparant --}}
+    <div class="absolute bg-black opacity-40 w-full h-full"></div>
+    <div class="absolute z-[100] w-[691px] h-[565px] bg-white flex flex-col top-[50%] left-[50%] translate-[-50%]">
+        <div class="flex px-3 py-3">
+            <div class="flex-1 text-[29px] font-semibold pl-[30px]">Choose Voucher</div>
+            <i id="voucher-close" class="fa-solid fa-circle-xmark text-[var(--color-green-700)] text-[40px] hover:cursor-pointer" onclick="closePopup"></i>
+        </div>
+        <hr class="border-[2.5px]" />
+        <div class="flex-1 flex flex-col overflow-y-scroll max-h-[380px] py-12 gap-4">
+            {{-- TODO: Fetch coupon logic --}}
+            {{-- Assign id to label, and input --}}
+            <div class="flex justify-center items-center">
+                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">10%</div>
+                <div class="flex justify-between bg-[var(--color-cream-700)] w-[436px] h-[106px] items-center px-5">
+                    <label for="1" class="text-[29px] font-semibold">Discount Voucher</label>
+                    <input type="checkbox" id="1" />
+                </div>
+            </div>
+             <div class="flex justify-center items-center">
+                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">10%</div>
+                <div class="flex justify-between bg-[var(--color-cream-700)] w-[436px] h-[106px] items-center px-5">
+                    <label for="2" class="text-[29px] font-semibold">Discount Voucher</label>
+                    <input type="checkbox" id="2" />
+                </div>
+            </div>
+             <div class="flex justify-center items-center">
+                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">10%</div>
+                <div class="flex justify-between bg-[var(--color-cream-700)] w-[436px] h-[106px] items-center px-5">
+                    <label for="3" class="text-[29px] font-semibold">Discount Voucher</label>
+                    <input type="checkbox" id="3" />
+                </div>
+            </div>
+        </div>
+        <div class="w-full flex justify-center">
+            {{-- TODO: Apply Voucher Logic --}}
+            <button id="voucher-apply" class="rounded-[15px] bg-[var(--color-green-700)] text-white text-[24px] w-[259px] h-[69px] hover:cursor-pointer mt-6">Apply Now</button>
+        </div>
+    </div> 
+    </form>
+</div>
+
 {{-- If cart empty --}}
 <div class="w-full h-full flex-col justify-center items-center hidden">
     <p class="text-[30px] text-[var(--color-green-700)] font-bold">Oops! Looks like your bag is empty</p>
@@ -90,7 +135,7 @@ Don't miss out—add your favorites to your bag today! </p>
         <i class="fa-solid fa-ticket-simple text-[45px]"></i>
         <p class="font-semibold text-[24px]">Use Your Vouchers</p>
     </div>
-    <p class="text-[var(--color-green-700)] text-[22px] font-semibold">Apply your discount or cashback now</p>
+        <p id="voucher-open" class="text-[var(--color-green-700)] text-[22px] font-semibold hover:cursor-pointer">Apply your discount or cashback now</p>
 </div>
 <hr />
 
@@ -122,3 +167,39 @@ input[type="checkbox"] {
     height: 20px;
 }
 </style>
+
+<script defer>
+let overlayPopup = null
+
+window.onload = function() {
+    const voucherOpen = document.getElementById("voucher-open")
+    const voucherClose = document.getElementById("voucher-close")
+    const voucherApply = document.getElementById("voucher-apply")
+
+    overlayPopup = document.getElementById("voucher-overlay")
+
+    console.log(overlayPopup)
+
+    voucherOpen.addEventListener('click', () => {
+        openPopup()
+    })
+    voucherClose.addEventListener('click', () => {
+        closePopup()
+    })
+    voucherApply.addEventListener('click', () => {
+        closePopup()
+    })
+
+}
+
+function openPopup() {
+    if(!overlayPopup) return
+    overlayPopup.classList.remove("hidden")
+}
+
+function closePopup() {
+    if(!overlayPopup) return
+    overlayPopup.classList.add("hidden")
+}
+
+</script>
