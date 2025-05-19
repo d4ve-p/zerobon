@@ -4,17 +4,44 @@
     {{-- Popup Overlay --}}
     {{-- Popup overlay has the following properties --}}
     {{-- Image, Name, Description, Rating --}}
-    <div id="popup-overlay" class="w-screen h-screen fixed z-[100] top-0 hidden">
+    <form id="popup-form" method="GET">
+    <input id="popup-item-id" type="text" class="hidden"/>
+    <div id="popup-overlay" class="w-screen h-screen fixed z-[100] top-0">
         {{-- Overlay Background --}}
         <div class="absolute w-full h-full bg-black opacity-25"></div>
         {{-- Content Placeholder --}}
         <div class="absolute w-[862px] h-[560px] bg-white drop-shadow-lg left-[50%] top-[50%] translate-[-50%] flex flex-col">
             {{-- X Button --}}
-            <div class="w-full flex justify-end">
-
+            <div class="w-full flex justify-end p-[10px] box-border">  
+                <i id="popup-close" class="fa-solid fa-circle-xmark text-[var(--color-green-700)] text-[40px] hover:cursor-pointer"></i>
+            </div>
+            {{-- Content --}}
+            <div class="w-full flex flex-1 py-[40px] box-border">
+                
+                <div class="flex justify-center px-[30px]">
+                    <img class="w-[232px] h-[277px]" src="{{asset("product-placeholder.png")}}"/>
+                </div>
+                <div class="flex flex-col gap-[20px] flex-1">
+                    <h1 id="popup-title" class="text-[29px] font-semibold">Zerobon Totebag</h1>
+                    <p id="popup-description" class="text-[15px]">Crafted from 100% organic cotton canvas, this eco-friendly tote is durable, reusable, and free from harmful chemicals—perfect for everyday use and reducing plastic waste.</p>
+                    {{-- Rating --}}
+                    <div>Rating Placeholder</div>
+                    {{-- Quantity Selector --}}
+                    <div class="flex gap-[20px] items-center">
+                        <p class="text-[18px] font-medium">Quantity</p>
+                        {{-- Number Selector --}}
+                        <div class="w-[165px] h-[44px] border-[var(--color-green-700)] border-2 rounded-[40px] flex justify-between items-center box-border p-[10px]">
+                            <i id="popup-substract" class="fa-solid fa-minus w-[17px] h-[17px] text-center hover:cursor-pointer"></i>
+                            <input id="popup-number-input" type="number" class="w-[55px] h-[21px] text-[18px] outline-none border-none text-center" value="1"/>
+                            <i id="popup-add" class="fa-solid fa-plus w-[17px] h-[17px] text-center hover:cursor-pointer"></i>
+                        </div>
+                    </div>
+                    <input type="submit" value="Add to bag" class="hover:cursor-pointer ml-[10px] rounded-[15px] w-[254px] h-[56px] text-center text-[20px] font-semibold bg-[var(--color-green-700)] text-white"/>
+                </div>
             </div>
         </div>
     </div>
+    </form>
 
     @can('update', App\Models\Product::class)
     <div class="w-full h-full px-5 py-3 box-border">
@@ -66,5 +93,52 @@
             </div>
         </div>
     </div>
-
 @endsection
+
+<style>
+#popup-number-input::-webkit-inner-spin-button {    
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+}
+#popup-number-input {
+    outline: none;
+    border: none;
+}
+</style>
+
+<script defer>
+window.onload = function() {
+    // Form elements
+    const popupOverlay = document.getElementById("popup-overlay")
+    const popupFormNumberInput = document.getElementById("popup-number-input")
+    const closeButton = document.getElementById("popup-close")
+
+    // Universal Logic
+    // Add / Substract function
+    document.getElementById("popup-add").addEventListener('click', () => {
+        const value = parseInt(popupFormNumberInput.value)
+        popupFormNumberInput.value = value + 1
+    })
+    document.getElementById("popup-substract").addEventListener('click', () => {
+        const value = parseInt(popupFormNumberInput.value)
+        popupFormNumberInput.value = Math.max(0, value - 1)
+    })
+    // Close function
+    closeButton.addEventListener('click',() => {
+        popupOverlay.classList.add('hidden')
+    } )
+
+}
+
+function openPopup(item) {
+    // Elements
+    const popupOverlay = document.getElementById("popup-overlay")
+    const popupId = document.getElementById("popup-item-id")
+    const popupTitle = document.getElementById("popup-title")
+    const popupDescription = document.getElementById("popup-description")
+
+    popupId.value = item.id
+    popupTitle = item.title
+    popupDescription = item.description
+}
+</script>
