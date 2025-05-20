@@ -1,6 +1,7 @@
 @extends('components.layouts.app.home-layout')
 @section('content')
-<div class="w-full py-[50px] px-[30px] flex flex-col bg-[var(--color-cream-500)]">
+{{-- If checkout --}}
+<div class="w-full py-[50px] px-[30px] flex flex-col bg-[var(--color-cream-500)] hidden">
     <div class="w-full flex justify-between items-center mb-[50px]">
         <button class="text-[20px] text-[var(--color-green-700)] font-semibold">< Previous</button>
         <p class="font-semibold text-[30px]">Checkout Time</p>
@@ -86,6 +87,30 @@
                 <button class="bg-[var(--color-green-700)] w-[400px] h-[69px] rounded-[15px] text-white font-semibold text-[24px]">Place Order</button>
             </div>
         </div>
+    </div>
+</div>
+{{-- If pending payment status --}}
+{{-- TODO: Fillout appropriate details --}}
+<div class="flex flex-1 flex-col w-full h-full items-center bg-[var(--color-cream-500)]">
+    <p class="py-[50px] text-[30px] font-semibold">Waiting Payment</p>
+    <div class="w-[772px] px-8 py-4 box-border bg-white flex flex-col gap-[20px] h-[403px] rounded-[15px]">
+        <div class="p-4 flex justify-between w-full border-[var(--color-green-700)] border-2 rounded-[15px]">
+            <p class="text-[20px]">Complete Your Payment Before</p>
+            <p class="text-[20px] text-[var(--color-green-700)]">14 May 2025, 15.24 WIB</p>
+        </div>
+        <div class="flex text-[20px] px-8">
+            <p class="font-semibold w-[480px] ">Order Number</p>
+            <p class="font-medium">CHDUXWTYRU</p>
+        </div>
+        <div class="flex text-[20px] px-8">
+            <p class="font-semibold w-[480px] ">BCA Virtual Account</p>
+            <p class="font-medium">37848124567890</p>
+        </div>
+        <div class="flex text-[20px] px-8">
+            <p class="font-semibold w-[480px] ">Total</p>
+            <p class="font-medium">Rp150.000</p>
+        </div>
+        <button class="text-white bg-[var(--color-green-700)] text-[22px] font-semibold w-[716px] h-[47px] rounded-[15px]">View Order Status</button>
     </div>
 </div>
 @endsection
