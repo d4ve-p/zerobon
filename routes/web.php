@@ -42,6 +42,12 @@ Route::prefix('social-activities')->group(function() {
 });
 
 Route::middleware(['auth'])->group(function() {
+    // Order
+    Route::prefix('order')->group(function() {
+        Route::view('/', function() { })
+            ->name('order');
+    });
+
     // Checkout
     Route::prefix('checkout')->group(function() {
         Route::view('/', function() { })
