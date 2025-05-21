@@ -41,6 +41,8 @@ Route::prefix('social-activities')->group(function() {
         ->name('social-activities');
 });
 
+
+
 Route::middleware(['auth'])->group(function() {
     // Order
     Route::prefix('order')->group(function() {
@@ -108,6 +110,18 @@ Route::middleware(['auth'])->group(function() {
             ->name('reward');
         Route::post('/use', function() { })
             ->name('reward-user-post');
+    });
+
+    // Challenge
+    Route::prefix('challenge')->group(function() {
+        Route::get('/', function() { })
+            ->name('challenge');
+        Route::get('/{id}', function() { })
+            ->name('challenge-detail');
+        Route::get('/start/{id}', function() { })
+            ->name('start-challenge');
+        Route::post('/start/{id}', function() { })
+            ->name('submit-challenge');
     });
 });
 
