@@ -12,6 +12,7 @@
 @theme {
     --font-poppins: 'Poppins', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    --color-blue-500: #09A9FF;
     --color-green-700: #228B22;
     --color-green-900: #124C12;
     --color-cream-500: #FFF8E8;

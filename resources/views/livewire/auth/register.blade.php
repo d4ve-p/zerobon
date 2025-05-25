@@ -123,6 +123,11 @@
         <div class="w-full flex items-center justify-center rounded-[15px]">
             <input type="submit" value="Register" class="bg-[var(--color-green-700)] text-white w-[365px] h-[55px] text-[20px] font-bold rounded-[30px]"/>
         </div>
+
+        <div class="flex gap-2 w-full justify-center text-[16px]">
+            <p class="font-medium">Already have an account?</p>
+            <a class="font-semibold hover:cursor-pointer text-[var(--color-blue-500)]" href="{{route('login')}}">Login</a>
+        </div>
     </form>
     </div> 
 </div>
