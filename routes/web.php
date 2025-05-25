@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProductController;
-use App\Livewire\CreateProduct;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -15,7 +14,7 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 // Products
-Route::view('products', 'products.products')
+Route::get('products', [ProductController::class, 'products'])
     ->name('products');
 Route::view('products/create', 'products.create-product')
     ->name('create-product');

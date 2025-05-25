@@ -96,6 +96,11 @@
                     </div>
                 @endforeach
             </div>
+            <div class="w-full flex justify-center">
+                <div class="flex flex-col">
+                    {{ $products->links() }}
+                </div>
+            </div>
         </div>
     </div>
 @endsection
