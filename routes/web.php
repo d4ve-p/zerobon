@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +60,9 @@ Route::middleware(['auth'])->group(function() {
     Route::prefix('carts')->group(function() {
         Route::view('/', 'carts.cart')
         ->name('carts');
+        
+        Route::post('/add', [CartController::class, 'addToCart'])
+        ->name('cart.add');
     });
 
     // Purchases
