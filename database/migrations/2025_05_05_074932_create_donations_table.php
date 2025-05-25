@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('donations', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer("donationValue");
-            $table->date("donationDate");
+            $table->integer("donation_value");
+            $table->date("donation_date");
 
             /**
              * Foreign keys

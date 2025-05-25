@@ -10,7 +10,7 @@ class PurchaseItem extends Model
 {
     //
     protected $fillable = [
-        "productId",
+        "product_id",
         "quantity",
         "productPrice"
     ];
