@@ -6,7 +6,7 @@
     {{-- Image, Name, Description, Rating --}}
     <form id="popup-form" method="GET">
     <input id="popup-item-id" type="text" class="hidden"/>
-    <div id="popup-overlay" class="w-screen h-screen fixed z-[100] top-0">
+    <div id="popup-overlay" class="w-screen h-screen fixed z-[100] top-0 hidden">
         {{-- Overlay Background --}}
         <div class="absolute w-full h-full bg-black opacity-25"></div>
         {{-- Content Placeholder --}}
