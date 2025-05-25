@@ -8,7 +8,7 @@
                 <p class="text-[26px] font-semibold drop-shadow-lg text-white">Thank you for joining us. A new world full of opportunities awaits!</p>
             </div>
         </div>
-        <form wire:submit.prevent="register" class="flex flex-col gap-6 px-[40px] py-[20px] justify-center">
+        <form wire:submit.prevent="login" class="flex flex-col gap-6 px-[40px] py-[20px] justify-center">
         <p class="text-[48px] font-bold">Sign In</p>
 
         <!-- Full Name -->
@@ -42,7 +42,13 @@
         </div>
 
         <div class="flex gap-4">
-            <input type="checkbox" name="remember-me" id="remember-me" class="w-[25px] h-[25px] outline-none border-none"/>
+            <input 
+                wire:model="remember"
+                type="checkbox" 
+                name="remember-me" 
+                id="remember-me" 
+                class="w-[25px] h-[25px] outline-none border-none"
+            />
             <label for="remember-me" class="text-[16px] font-medium">Remember Me</label>
         </div>
 

@@ -13,14 +13,26 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('email')->unique()->nullable();
+            $table->string('fullname');
+            $table->string('username')->unique();
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->enum('role', ['guest', 'member', 'admin'])->default('member');
         });
+
+        // MYSQL only
+        if (DB::connection()->getDriverName() === 'mysql') {
+            DB::statement("
+            ALTER TABLE users
+            ADD CONSTRAINT check_phone_numeric
+            CHECK (phone IS NULL OR phone = '' OR phone REGEXP '^[0-9]*$')
+            ");
+        }
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
