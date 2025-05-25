@@ -77,17 +77,24 @@
             <div class="flex-1 w-full flex gap-2 justify-evenly">
                 {{--3 items per row--}}
                 {{-- Item Box --}}
+
+                @foreach ($products as $product)
                 <div class="py-[30px] basis-[30%] flex justify-center">
-                <div class="w-[376px] h-[543px] bg-white flex flex-col justify-between items-center py-[30px]">
-                    <div class="flex flex-col items-center">
-                        <img class="w-[232px] h-[277px]" src="{{asset("product-placeholder.png")}}" />
-                        <p class="font-semibold text-[29px]">Product 1</p>
-                        <p class="font-extralight text-[20px]">Rp25.000</p>
+                    <div class="w-[376px] h-[543px] bg-white flex flex-col justify-between items-center py-[30px]">
+                        <div class="flex flex-col items-center">
+                            @if ($product->image_filename === null)
+                                <img class="w-[232px] h-[277px]" src="{{ asset('product-placeholder.png') }}" />
+                            @else
+                                <img class="w-[232px] h-[277px]" src="{{ Storage::disk('product_images')->url($product->image_filename) }}" />
+                            @endif
+                            
+                            <p class="font-semibold text-[29px]">{{ $product->name }}</p>
+                            <p class="font-extralight text-[20px]">Rp{{ $product->price }}</p>
+                        </div>
+                        <button class="bg-[var(--color-green-700)] text-white w-[264px] h-[56px] text-[20px] font-semibold rounded-[20px]">Add to bag</button>
                     </div>
-                    <button class="bg-[var(--color-green-700)] text-white w-[264px] h-[56px] text-[20px] font-semibold rounded-[20px]">Add to bag</button>
-                </div>
-                </div>
-                
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
