@@ -34,8 +34,6 @@ class Register extends Component
             'password' => Hash::make($this->password)
         ]);
 
-        Auth::login($user);
-
         return redirect()->route('login');
     }
     public function render()
