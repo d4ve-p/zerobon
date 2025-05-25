@@ -20,12 +20,12 @@ return new class extends Migration
             /**
              * Foreign keys
              */
-            $table->unsignedBigInteger('userId');
+            $table->unsignedBigInteger('user_id');
 
             /**
              * Foreign constraints
              */
-            $table->foreign('userId')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
 
         });
     }

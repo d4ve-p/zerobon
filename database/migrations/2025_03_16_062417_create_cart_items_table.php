@@ -18,19 +18,20 @@ return new class extends Migration
             /**
              * Foreign keys
              */
-            $table->unsignedBigInteger('productId');
-            $table->unsignedBigInteger('cartId');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('cart_id');
+            $table->unsignedBigInteger('quantity');
 
             /**
              * Foreign constraints
              */
-            $table->foreign('productId')->references('id')->on('products');
-            $table->foreign('cartId')->references('id')->on('carts');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('cart_id')->references('id')->on('carts');
 
             /**
              * Unique constraint
              */
-            $table->unique(['productId', 'cartId']);
+            $table->unique(['product_id', 'cart_id']);
         });
     }
 
