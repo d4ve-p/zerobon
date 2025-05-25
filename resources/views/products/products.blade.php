@@ -24,8 +24,6 @@
                 <div class="flex flex-col gap-[20px] flex-1">
                     <h1 id="popup-title" class="text-[29px] font-semibold">Zerobon Totebag</h1>
                     <p id="popup-description" class="text-[15px]">Crafted from 100% organic cotton canvas, this eco-friendly tote is durable, reusable, and free from harmful chemicals—perfect for everyday use and reducing plastic waste.</p>
-                    {{-- Rating --}}
-                    <div>Rating Placeholder</div>
                     {{-- Quantity Selector --}}
                     <div class="flex gap-[20px] items-center">
                         <p class="text-[18px] font-medium">Quantity</p>
