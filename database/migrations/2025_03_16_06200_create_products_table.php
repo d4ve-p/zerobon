@@ -16,6 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string("name")->unique();
             $table->integer('price');
+            $table->text("description")->nullable();
+            $table->string("image_filename")->nullable();
         });
     }
 
