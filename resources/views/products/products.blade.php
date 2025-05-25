@@ -74,7 +74,7 @@
             <div class="h-[65px] w-full"></div>
 
             {{-- Product Showcase --}}
-            <div class="flex-1 w-full flex gap-2 justify-evenly">
+            <div class="flex-1 w-full flex gap-2 justify-evenly flex-wrap">
                 {{--3 items per row--}}
                 {{-- Item Box --}}
 
