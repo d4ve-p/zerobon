@@ -31,7 +31,8 @@ class Register extends Component
             'address' => $this->address,
             'phone' => $this->phone,
             'email' => $this->email,
-            'password' => Hash::make($this->password)
+            'password' => Hash::make($this->password),
+            'role' => 'member'
         ]);
 
         return redirect()->route('login');
