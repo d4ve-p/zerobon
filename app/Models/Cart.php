@@ -15,6 +15,10 @@ class Cart extends Model
      * Get the user the cart belongs to
      * @return BelongsTo<User, Cart>
      */
+    protected $fillable = [
+        "user_id"
+    ];
+
     function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

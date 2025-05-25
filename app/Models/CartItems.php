@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CartItems extends Model
 {
     //
     protected $fillable = [
+        "product_id",
+        "cart_id",
         "quantity"
     ];
 
@@ -22,5 +25,10 @@ class CartItems extends Model
     function product(): HasOne
     {
         return $this->hasOne(Product::class);
+    }
+
+    function cart(): BelongsTo
+    {
+        return $this->belongsTo(Cart::class);
     }
 }
