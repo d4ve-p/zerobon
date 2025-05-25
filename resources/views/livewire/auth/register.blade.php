@@ -15,7 +15,7 @@
         <div class="flex border-2 border-black rounded-[50px] h-[50px] w-[508px] items-center px-6 py-4 gap-6">
             <i class="fa-solid fa-user text-[20px]"></i>
             <input
-                wire:model="full-name"
+                wire:model="fullname"
                 type="text"
                 required
                 autofocus
@@ -109,7 +109,7 @@
         <div class="flex border-2 border-black rounded-[50px] h-[50px] w-[508px] items-center px-6 py-4 gap-6">
             <i class="fa-solid fa-lock text-[20px]"></i>
             <input
-                wire:model="confirm-password"
+                wire:model="confirm"
                 type="password"
                 required
                 autofocus
