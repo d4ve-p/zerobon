@@ -23,12 +23,16 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->enum('role', ['guest', 'member', 'admin'])->default('member');
-
-            // MYSQL only
-            if (DB::connection()->getDriverName() === 'mysql') {
-                $table->raw("CONSTRAINT check_phone_numeric CHECK (phone IS NULL OR phone ~ '^[0-9]*$' OR phone = '')");
-            }
         });
+
+        // MYSQL only
+        if (DB::connection()->getDriverName() === 'mysql') {
+            DB::statement("
+            ALTER TABLE users
+            ADD CONSTRAINT check_phone_numeric
+            CHECK (phone IS NULL OR phone = '' OR phone REGEXP '^[0-9]*$')
+            ");
+        }
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
