@@ -41,13 +41,26 @@ Route::prefix('social-activities')->group(function() {
         ->name('social-activities');
 });
 
+
+
 Route::middleware(['auth'])->group(function() {
-    // Carts
-    Route::prefix('carts')->group(function() {
+    // Order
+    Route::prefix('order')->group(function() {
         Route::view('/', function() { })
-        ->name('carts');
+            ->name('order');
     });
 
+    // Checkout
+    Route::prefix('checkout')->group(function() {
+        Route::view('/', function() { })
+            ->name('checkout');
+    });
+
+    // Carts
+    Route::prefix('carts')->group(function() {
+        Route::view('/', 'carts.cart')
+        ->name('carts');
+    });
 
     // Purchases
     Route::prefix('purchases')->group(function() {
@@ -97,6 +110,18 @@ Route::middleware(['auth'])->group(function() {
             ->name('reward');
         Route::post('/use', function() { })
             ->name('reward-user-post');
+    });
+
+    // Challenge
+    Route::prefix('challenge')->group(function() {
+        Route::get('/', function() { })
+            ->name('challenge');
+        Route::get('/{id}', function() { })
+            ->name('challenge-detail');
+        Route::get('/start/{id}', function() { })
+            ->name('start-challenge');
+        Route::post('/start/{id}', function() { })
+            ->name('submit-challenge');
     });
 });
 

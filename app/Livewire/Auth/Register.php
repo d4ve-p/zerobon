@@ -12,9 +12,13 @@ class Register extends Component
     public $name, $email, $password;
 
     protected $rules = [
-        'name' => 'required|min:3|unique:users,name',
+        'fullname' => 'required|min:3|unique:users,fullname',
+        'username' => 'required|min:3|unique:users,username',
         'email' => 'required|email|unique:users,email',
-        'password' => 'required|min:6'
+        'address' => 'required',
+        'phone' => 'required|numeric|digits_between:10,15',
+        'password' => 'required|min:6',
+        'confirm' => 'required|min:6'
     ];
 
     public function register()
