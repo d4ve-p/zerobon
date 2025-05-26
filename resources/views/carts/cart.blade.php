@@ -11,7 +11,7 @@
     <div class="absolute z-[100] w-[691px] h-[565px] bg-white flex flex-col top-[50%] left-[50%] translate-[-50%]">
         <div class="flex px-3 py-3">
             <div class="flex-1 text-[29px] font-semibold pl-[30px]">Choose Voucher</div>
-            <i id="voucher-close" class="fa-solid fa-circle-xmark text-[var(--color-green-700)] text-[40px] hover:cursor-pointer" onclick="closePopup"></i>
+            <i id="voucher-close" class="fa-solid fa-circle-xmark text-[var(--color-green-700)] text-[40px] hover:cursor-pointer" onclick="closePopup()"></i>
         </div>
         <hr class="border-[2.5px]" />
         <div class="flex-1 flex flex-col overflow-y-scroll max-h-[380px] py-12 gap-4">
@@ -41,7 +41,7 @@
         </div>
         <div class="w-full flex justify-center">
             {{-- TODO: Apply Voucher Logic --}}
-            <button id="voucher-apply" class="rounded-[15px] bg-[var(--color-green-700)] text-white text-[24px] w-[259px] h-[69px] hover:cursor-pointer mt-6">Apply Now</button>
+            <button type="button" id="voucher-apply" class="rounded-[15px] bg-[var(--color-green-700)] text-white text-[24px] w-[259px] h-[69px] hover:cursor-pointer mt-6" onclick="closePopup()">Apply Now</button>
         </div>
     </div> 
     </form>
@@ -109,9 +109,9 @@
                     <i class="fa-solid fa-trash" onclick="deleteCartItem('{{route('cart.delete')}}', {{ $item->id }})"></i>
                     
                     <div class="w-[165px] h-[44px] items-center flex bg-white justify-between border-2 border-[var(--color-green-700)] rounded-[15px] px-[5px] box-border">
-                        <i id="popup-substract" class="fa-solid fa-minus hover:cursor-pointer"></i>
-                        <input id="number-input" name="{{ "quantity-".$item->id }}" type="number" class="w-[52px] h-[26px] text-[18px] outline-none border-none text-center number-input font-semibold" value="{{ $item->quantity }}" onchange="changeCartItemValue('{{route('cart.update')}}', {{$item->id}})"/>
-                        <i id="popup-add" class="fa-solid fa-plus   hover:cursor-pointer"></i>
+                        <i id="popup-substract" class="fa-solid fa-minus hover:cursor-pointer" onclick="decrement('{{$item->id}}')"></i>
+                        <input id="{{"quantity-".$item->id }}" type="number" class="number-input w-[52px] h-[26px] text-[18px] text-center number-input font-semibold" value="{{ $item->quantity }}" onchange="changeCartItemValue('{{route('cart.update')}}', {{$item->id}})"/>
+                        <i id="popup-add" class="fa-solid fa-plus   hover:cursor-pointer" onclick="increment('{{$item->id}}')"></i>
                     </div>
                 </div>
             </th>
@@ -146,11 +146,11 @@
 @endsection 
 
 <style>
-#number-input::-webkit-inner-spin-button {    
+input[type="number"]::-webkit-inner-spin-button {    
     -webkit-appearance: none;
     -moz-appearance: textfield;
 }
-#number-input {
+input[type="number"] {
     outline: none;
     border: none;
 }
@@ -212,8 +212,23 @@ function deleteCartItem(action_url, id) {
     })
 }
 
+function increment(id) {
+    const inc = document.getElementById("quantity-"+id)
+    inc.value = parseInt(inc.value) + 1
+
+    changeCartItemValue('{{route("cart.update")}}', id)
+}
+
+function decrement(id) {
+    const dec = document.getElementById("quantity-"+id)
+    dec.value = Math.max(1, parseInt(dec.value) - 1)
+
+    changeCartItemValue('{{route("cart.update")}}', id)
+}
+
 function changeCartItemValue(action_url, id) {
     const csrfToken = document.getElementsByName("_token")[0].value
+    const itemQuantity = document.getElementById("quantity-" + id)
 
     fetch(action_url, {
         method: 'POST',
@@ -222,11 +237,9 @@ function changeCartItemValue(action_url, id) {
             'X-CSRF-TOKEN': csrfToken,
             'Accept': 'application/json'
         },
-        body: JSON.stringify({ id: id })
+        body: JSON.stringify({ id: id, quantity: itemQuantity.value })
     }).then(() => {
-        window.location.reload()
-    }).error((err) => {
-        console.log(err)
+        // window.location.reload()
     })
 }
 </script>

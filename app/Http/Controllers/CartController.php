@@ -76,6 +76,7 @@ class CartController extends Controller
 
         $cartItem = $cart->items->where('id', $id)->first();
         $cartItem->quantity = $quantity;
+        $cartItem->save();
 
         DB::commit();
     }
