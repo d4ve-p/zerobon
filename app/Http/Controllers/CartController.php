@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\CartItems;
 use App\Models\Product;
 use DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Log;
+use Illuminate\View\View;
 
 class CartController extends Controller
 {
@@ -42,5 +41,12 @@ class CartController extends Controller
         DB::commit();
 
         return redirect(route("products"));
+    }
+
+    function getCart(): View {
+        $cart = Cart::where('user_id', Auth::user()->id)->first();
+        $cart_items = $cart->items;
+
+        return view('carts.cart', ['items' => $cart_items]);
     }
 }

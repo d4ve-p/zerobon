@@ -81,53 +81,38 @@ Don't miss out—add your favorites to your bag today! </p>
         </tr>
     </thead>
     <tbody>
-        <tr class="h-[245px] bg-[var(--color-cream-500)] font-semibold text-[24px] box-border">
+        @foreach ($items as $item)
+            <tr class="h-[245px] bg-[var(--color-cream-500)] font-semibold text-[24px] box-border">
             <th scope="row" class="flex px-6 py-3 gap-6 h-[245px] box-border items-center">
-                <input type="checkbox" id="cart-select-all" class="rounded-none"/>
-                <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
+                <input type="checkbox" id="cart-select" value="{{ $item->id }}" class="rounded-none"/>
+                @if ($item->product->image_filename === null)
+                    <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
+                @else
+                    <img src="{{ Storage::disk('product_images')->url($item->product->image_filename) }}" class="w-[125px] h-[150px]"/>
+                @endif
             </th>
             <th scope="row" class="px-6 py-4 font-medium box-border">
-                Zerobon Totebag
+                {{ $item->product->name }}
             </th>
             <th scope="row" class="px-6 py-4 font-medium box-border">
-                Rp.25000
+                Rp.{{ $item->product->price }}
             </th>
             {{-- TODO: --}}
             {{-- Delete route: /cart/{id}/delete --}}
             {{-- Value change route: /card/{id}/set --}}
+            {{-- Delete/Change value, should be done separately from form action --}}
             <th scope="row" class="px-6 py-4 font-medium flex justify-center box-border">
                 <div class="flex gap-4 items-center">
                     <i class="fa-solid fa-trash"></i>
                     <div class="w-[165px] h-[44px] items-center flex bg-white justify-between border-2 border-[var(--color-green-700)] rounded-[15px] px-[5px] box-border">
                         <i id="popup-substract" class="fa-solid fa-minus hover:cursor-pointer"></i>
-                        <input id="number-input" type="number" class="w-[52px] h-[26px] text-[18px] outline-none border-none text-center number-input font-semibold" value="1"/>
+                        <input id="number-input" name="{{ "quantity-".$item->id }}" type="number" class="w-[52px] h-[26px] text-[18px] outline-none border-none text-center number-input font-semibold" value="{{ $item->quantity }}"/>
                         <i id="popup-add" class="fa-solid fa-plus   hover:cursor-pointer"></i>
                     </div>
                 </div>
             </th>
         </tr>
-        <tr class="h-[245px] bg-[var(--color-cream-500)] font-semibold text-[24px] box-border">
-            <th scope="row" class="flex px-6 py-3 gap-6 h-[245px] box-border items-center">
-                <input type="checkbox" id="cart-select-all" class="rounded-none"/>
-                <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
-            </th>
-            <th scope="row" class="px-6 py-4 font-medium box-border">
-                Zerobon Totebag
-            </th>
-            <th scope="row" class="px-6 py-4 font-medium box-border">
-                Rp.25000
-            </th>
-            <th scope="row" class="px-6 py-4 font-medium flex justify-center box-border">
-                <div class="flex gap-4 items-center">
-                    <i class="fa-solid fa-trash"></i>
-                    <div class="w-[165px] h-[44px] items-center flex bg-white justify-between border-2 border-[var(--color-green-700)] rounded-[15px] px-[5px] box-border">
-                        <i id="popup-substract" class="fa-solid fa-minus hover:cursor-pointer"></i>
-                        <input id="number-input" type="number" class="w-[52px] h-[26px] text-[18px] outline-none border-none text-center number-input font-semibold" value="1"/>
-                        <i id="popup-add" class="fa-solid fa-plus   hover:cursor-pointer"></i>
-                    </div>
-                </div>
-            </th>
-        </tr>
+        @endforeach
     </tbody>
 </table>
 <div class="flex justify-between px-6 py-3 box-border">

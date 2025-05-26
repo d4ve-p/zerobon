@@ -22,9 +22,9 @@ class CartItems extends Model
      * Get the product for the cart iem
      * @return HasOne<Product, CartItems>
      */
-    function product(): HasOne
+    function product(): BelongsTo
     {
-        return $this->hasOne(Product::class);
+        return $this->belongsTo(Product::class);
     }
 
     function cart(): BelongsTo

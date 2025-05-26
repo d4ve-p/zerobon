@@ -58,7 +58,7 @@ Route::middleware(['auth'])->group(function() {
 
     // Carts
     Route::prefix('carts')->group(function() {
-        Route::view('/', 'carts.cart')
+        Route::get('/', [CartController::class, 'getCart'])
         ->name('carts');
         
         Route::post('/add', [CartController::class, 'addToCart'])
