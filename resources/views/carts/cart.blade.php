@@ -48,15 +48,18 @@
 </div>
 
 {{-- If cart empty --}}
-<div class="w-full h-full flex-col justify-center items-center hidden">
-    <p class="text-[30px] text-[var(--color-green-700)] font-bold">Oops! Looks like your bag is empty</p>
-    <img src="{{asset("cart-empty.png")}}" class="w-[400px] h-[300px]"/>
-    <p class="font-medium text-[25px] w-[523px] text-center">Start shopping now and discover the best products just for you! 
-Don't miss out—add your favorites to your bag today! </p>
-    <button class="my-[20px] text-[20px] text-white bg-[var(--color-green-700)] rounded-[20px] w-[264px] h-[56px] font-semibold hover:cursor-pointer" onclick="window.location.href='{{route("products")}}'">Back to Shopping</button>
-</div>
+@if ($items->count() == 0)
+    <div class="w-full h-full flex flex-col justify-center items-center ">
+        <p class="text-[30px] text-[var(--color-green-700)] font-bold">Oops! Looks like your bag is empty</p>
+        <img src="{{asset("cart-empty.png")}}" class="w-[400px] h-[300px]"/>
+        <p class="font-medium text-[25px] w-[523px] text-center">Start shopping now and discover the best products just for you! 
+    Don't miss out—add your favorites to your bag today! </p>
+        <button class="my-[20px] text-[20px] text-white bg-[var(--color-green-700)] rounded-[20px] w-[264px] h-[56px] font-semibold hover:cursor-pointer" onclick="window.location.href='{{route("products")}}'>Back to Shopping</button>
+    </div>
+@else
 {{-- Else --}}
 <form>
+@csrf
 <div class="w-full h-full px-[80px]">
 <div class="w-full flex flex-col gap-[10px] box-border bg-[var(--color-cream-500)] ">
 <table class="w-full text-sm text-center box-border">
@@ -82,7 +85,7 @@ Don't miss out—add your favorites to your bag today! </p>
     </thead>
     <tbody>
         @foreach ($items as $item)
-            <tr class="h-[245px] bg-[var(--color-cream-500)] font-semibold text-[24px] box-border">
+            <tr class="h-[245px] bg-[var(--color-cream-500)] font-semibold text-[24px] box-border" id={{"tr-".$item->id}}>
             <th scope="row" class="flex px-6 py-3 gap-6 h-[245px] box-border items-center">
                 <input type="checkbox" id="cart-select" value="{{ $item->id }}" class="rounded-none"/>
                 @if ($item->product->image_filename === null)
@@ -103,10 +106,11 @@ Don't miss out—add your favorites to your bag today! </p>
             {{-- Delete/Change value, should be done separately from form action --}}
             <th scope="row" class="px-6 py-4 font-medium flex justify-center box-border">
                 <div class="flex gap-4 items-center">
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-solid fa-trash" onclick="deleteCartItem('{{route('cart.delete')}}', {{ $item->id }})"></i>
+                    
                     <div class="w-[165px] h-[44px] items-center flex bg-white justify-between border-2 border-[var(--color-green-700)] rounded-[15px] px-[5px] box-border">
                         <i id="popup-substract" class="fa-solid fa-minus hover:cursor-pointer"></i>
-                        <input id="number-input" name="{{ "quantity-".$item->id }}" type="number" class="w-[52px] h-[26px] text-[18px] outline-none border-none text-center number-input font-semibold" value="{{ $item->quantity }}"/>
+                        <input id="number-input" name="{{ "quantity-".$item->id }}" type="number" class="w-[52px] h-[26px] text-[18px] outline-none border-none text-center number-input font-semibold" value="{{ $item->quantity }}" onchange="changeCartItemValue('{{route('cart.update')}}', {{$item->id}})"/>
                         <i id="popup-add" class="fa-solid fa-plus   hover:cursor-pointer"></i>
                     </div>
                 </div>
@@ -135,6 +139,9 @@ Don't miss out—add your favorites to your bag today! </p>
 </div>
 </div>
 </form>
+@endif
+
+
 
 @endsection 
 
@@ -187,4 +194,39 @@ function closePopup() {
     overlayPopup.classList.add("hidden")
 }
 
+function deleteCartItem(action_url, id) {
+    const csrfToken = document.getElementsByName("_token")[0].value
+
+    fetch(action_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ id: id })
+    }).then(() => {
+        window.location.reload()
+    }).error((err) => {
+        console.log(err)
+    })
+}
+
+function changeCartItemValue(action_url, id) {
+    const csrfToken = document.getElementsByName("_token")[0].value
+
+    fetch(action_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ id: id })
+    }).then(() => {
+        window.location.reload()
+    }).error((err) => {
+        console.log(err)
+    })
+}
 </script>

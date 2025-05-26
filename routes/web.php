@@ -63,6 +63,12 @@ Route::middleware(['auth'])->group(function() {
         
         Route::post('/add', [CartController::class, 'addToCart'])
         ->name('cart.add');
+
+        Route::post('/delete', [CartController::class, 'removeItemFromCart'])
+        ->name('cart.delete');
+
+        Route::post('/update', [CartController::class, 'editCartItem'])
+        ->name('cart.update');
     });
 
     // Purchases

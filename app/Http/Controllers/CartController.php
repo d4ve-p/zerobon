@@ -44,9 +44,39 @@ class CartController extends Controller
     }
 
     function getCart(): View {
-        $cart = Cart::where('user_id', Auth::user()->id)->first();
+        $cart = Cart::firstOrCreate(
+            ['user_id' => Auth::user()->id]
+        );
+
         $cart_items = $cart->items;
 
         return view('carts.cart', ['items' => $cart_items]);
+    }
+
+    function removeItemFromCart(Request $request): RedirectResponse {
+        $user = Auth::user();
+        $id = $request->input("id");
+
+        $cart = Cart::where('user_id', $user->id)->first();
+
+        $cartItem = $cart->items->where('id', $id)->first();
+        $cartItem->delete();
+
+        DB::commit();
+
+        return redirect(route('carts'));
+    }
+
+    function editCartItem(Request $request) {
+        $user = Auth::user();
+        $id = $request->input("id");
+        $quantity = $request->input("quantity");
+
+        $cart = Cart::where('user_id', $user->id)->first();
+
+        $cartItem = $cart->items->where('id', $id)->first();
+        $cartItem->quantity = $quantity;
+
+        DB::commit();
     }
 }
