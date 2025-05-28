@@ -68,7 +68,7 @@
             {{-- TODO: Select all logic --}}
             <th scope="col" class="px-6 py-3 box-border">
                 <div class="w-full flex gap-6 items-center">
-                    <input type="checkbox" id="cart-select-all" class="rounded-none"/>
+                    <input checked type="checkbox" id="cart-select-all" class="rounded-none" onchange="checkOrUncheckAll()"/>
                     <p>Select All</p>
                 </div>
             </th>
@@ -87,7 +87,7 @@
         @foreach ($items as $item)
             <tr class="h-[245px] bg-[var(--color-cream-500)] font-semibold text-[24px] box-border" id={{"tr-".$item->id}}>
             <th scope="row" class="flex px-6 py-3 gap-6 h-[245px] box-border items-center">
-                <input type="checkbox" id="cart-select" value="{{ $item->id }}" class="rounded-none"/>
+                <input type="checkbox" id="cart-select" value="{{ $item->id }}" class="rounded-none" name="selected-products" checked />
                 @if ($item->product->image_filename === null)
                     <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
                 @else
@@ -132,7 +132,7 @@
 <div class="flex justify-between px-6 py-3 items-center">
     <div class="flex gap-2 items-center">
         <p class="text-[30px] font-bold">Total Price: </p>
-        <p class="text-[30px] font-semibold text-[var(--color-green-700)]">Rp140.000</p>
+        <p class="text-[30px] font-semibold text-[var(--color-green-700)]" id="totalPrice">Rp{{$subtotal}}</p>
     </div>
     <input type="submit" value="Checkout" class="w-[259px] h-[69px] text-[24px] text-white font-semibold bg-[var(--color-green-700)] rounded-[15px] "/>
 </div>
@@ -181,7 +181,6 @@ window.onload = function() {
     voucherApply.addEventListener('click', () => {
         closePopup()
     })
-
 }
 
 function openPopup() {
@@ -238,8 +237,22 @@ function changeCartItemValue(action_url, id) {
             'Accept': 'application/json'
         },
         body: JSON.stringify({ id: id, quantity: itemQuantity.value })
-    }).then(() => {
-        // window.location.reload()
+    }).then(async (resp) => {
+        const data = await resp.json()
+        console.log(data)
+        let subtotalContainer = document.getElementById("totalPrice")
+        subtotalContainer.innerHTML = `Rp${data.total_price}`
     })
+}
+
+function checkOrUncheckAll() {
+    const universalBox = document.getElementById("cart-select-all")
+    const value = universalBox.checked
+
+    const allBoxes = document.getElementsByName("selected-products")
+
+    for(const box of allBoxes) {
+        box.checked = value
+    }
 }
 </script>

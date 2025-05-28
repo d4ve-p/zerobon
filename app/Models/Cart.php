@@ -31,4 +31,16 @@ class Cart extends Model
     {
         return $this->hasMany(CartItems::class);
     }
+
+    function calculateTotalPrice()
+    {
+        $total = 0;
+        foreach($this->items()->with('product')->get() as $item) {
+            if($item->product) {
+                $total += $item->quantity * $item->product->price;
+            }
+        }
+
+        return $total;
+    }
 }

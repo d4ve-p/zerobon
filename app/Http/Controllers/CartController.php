@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Product;
 use DB;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,10 +51,13 @@ class CartController extends Controller
 
         $cart_items = $cart->items;
 
-        return view('carts.cart', ['items' => $cart_items]);
+        return view('carts.cart', [
+            'items' => $cart_items,
+            'subtotal' => $cart->calculateTotalPrice()
+        ]);
     }
 
-    function removeItemFromCart(Request $request): RedirectResponse {
+    function removeItemFromCart(Request $request): JsonResponse {
         $user = Auth::user();
         $id = $request->input("id");
 
@@ -64,10 +68,10 @@ class CartController extends Controller
 
         DB::commit();
 
-        return redirect(route('carts'));
+        return response()->json(['total_price' => $cart->calculateTotalPrice()]);
     }
 
-    function editCartItem(Request $request) {
+    function editCartItem(Request $request): JsonResponse {
         $user = Auth::user();
         $id = $request->input("id");
         $quantity = $request->input("quantity");
@@ -79,5 +83,7 @@ class CartController extends Controller
         $cartItem->save();
 
         DB::commit();
+
+        return response()->json(['total_price' => $cart->calculateTotalPrice()]);
     }
 }
