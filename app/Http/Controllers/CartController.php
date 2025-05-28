@@ -44,17 +44,25 @@ class CartController extends Controller
         return redirect(route("products"));
     }
 
-    function getCart(): View {
+    private function getCart(): array {
         $cart = Cart::firstOrCreate(
             ['user_id' => Auth::user()->id]
         );
 
         $cart_items = $cart->items;
 
-        return view('carts.cart', [
+        return [
             'items' => $cart_items,
             'subtotal' => $cart->calculateTotalPrice()
-        ]);
+        ];
+    }
+
+    function cartPage(): View {
+        return view('carts.cart', $this->getCart());
+    }
+
+    function checkOutPage(): View {
+        return view('checkout.checkout', $this->getCart());
     }
 
     function removeItemFromCart(Request $request): JsonResponse {
@@ -86,4 +94,5 @@ class CartController extends Controller
 
         return response()->json(['total_price' => $cart->calculateTotalPrice()]);
     }
+
 }

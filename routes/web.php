@@ -52,13 +52,13 @@ Route::middleware(['auth'])->group(function() {
 
     // Checkout
     Route::prefix('checkout')->group(function() {
-        Route::view('/', function() { })
+        Route::get('/', [CartController::class, 'checkOutPage'])
             ->name('checkout');
     });
 
     // Carts
     Route::prefix('carts')->group(function() {
-        Route::get('/', [CartController::class, 'getCart'])
+        Route::get('/', [CartController::class, 'cartPage'])
         ->name('carts');
         
         Route::post('/add', [CartController::class, 'addToCart'])
