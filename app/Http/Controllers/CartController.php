@@ -111,6 +111,10 @@ class CartController extends Controller
         return response()->json(['total_price' => $cart->calculateTotalPrice()]);
     }
 
+    function finalizeCheckout(): RedirectResponse {
+        return redirect(route("checkout"));
+    }
+
     function checkoutCart(): RedirectResponse {
         $user = Auth::user();
 

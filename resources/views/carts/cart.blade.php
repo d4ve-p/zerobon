@@ -58,7 +58,7 @@
     </div>
 @else
 {{-- Else --}}
-<form>
+<form method="POST" action="{{ route('finalize-checkout') }}">
 @csrf
 <div class="w-full h-full px-[80px]">
 <div class="w-full flex flex-col gap-[10px] box-border bg-[var(--color-cream-500)] ">

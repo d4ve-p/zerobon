@@ -66,6 +66,9 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/', [CartController::class, 'cartPage'])
         ->name('carts');
         
+        Route::post('/', [CartController::class, 'finalizeCheckout'])
+        ->name('finalize-checkout');
+
         Route::post('/add', [CartController::class, 'addToCart'])
         ->name('cart.add');
 
