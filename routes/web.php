@@ -54,6 +54,8 @@ Route::middleware(['auth'])->group(function() {
     Route::prefix('checkout')->group(function() {
         Route::get('/', [CartController::class, 'checkOutPage'])
             ->name('checkout');
+        Route::post('/', [CartController::class, 'checkoutCart'])
+            ->name('checkout-post');
     });
 
     // Carts

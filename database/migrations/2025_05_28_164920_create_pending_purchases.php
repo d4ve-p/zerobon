@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pending_purchases', function (Blueprint $table) {
             $table->id();
             $table->text("address");
+            $table->unsignedBigInteger("total");
             $table->timestamps();
 
             // Foreign

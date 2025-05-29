@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\PendingPurchase;
+use App\Models\PendingPurchaseItem;
 use App\Models\Product;
 use DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class CartController extends Controller
@@ -61,8 +64,21 @@ class CartController extends Controller
         return view('carts.cart', $this->getCart());
     }
 
-    function checkOutPage(): View {
-        return view('checkout.checkout', $this->getCart());
+    function checkOutPage(): View|RedirectResponse {
+        $user = Auth::user();
+
+        $cart = $this->getCart();
+
+        $pending = PendingPurchase::where("user_id", $user->id)->first();
+
+        if($cart["items"]->isEmpty() && $pending === null) {
+            return redirect(route("products"));
+        }
+
+        return view('checkout.checkout', [
+            "cart" => $cart,
+            "pending" => $pending
+        ]);
     }
 
     function removeItemFromCart(Request $request): JsonResponse {
@@ -95,4 +111,43 @@ class CartController extends Controller
         return response()->json(['total_price' => $cart->calculateTotalPrice()]);
     }
 
+    function checkoutCart(): RedirectResponse {
+        $user = Auth::user();
+
+        $cart = Cart::where('user_id', $user->id)->first();
+        $pendingPurchase = PendingPurchase::where('user_id', $user->id)->first();
+
+        if(!$cart) return redirect("/products");
+
+        if($pendingPurchase) {
+            $pendingPurchase->items()->delete();
+            $pendingPurchase->delete();
+        }
+
+        $pendingPurchase = PendingPurchase::create([
+            "user_id" => $user->id,
+            "address" => $user->address,
+            "total" => 10000
+        ]);
+
+        foreach($cart->items as $cartItem) {
+            PendingPurchaseItem::create([
+                "pending_purchase_id" => $pendingPurchase->id,
+                "product_id" => $cartItem->product->id,
+                "quantity" => $cartItem->quantity,
+                "product_price" => $cartItem->product->price
+            ]);
+            $pendingPurchase->total += $cartItem->product->price * $cartItem->quantity;
+
+            $cartItem->delete();
+        }
+
+        $pendingPurchase->save();
+
+        $cart->delete();
+
+        DB::commit();
+
+        return redirect(route("checkout"));
+    }
 }

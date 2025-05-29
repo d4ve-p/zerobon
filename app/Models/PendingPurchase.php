@@ -11,7 +11,8 @@ class PendingPurchase extends Model
     //
     protected $fillable = [
         "address",
-        "user_id"
+        "user_id",
+        "total"
     ];
 
     function user(): BelongsTo {
