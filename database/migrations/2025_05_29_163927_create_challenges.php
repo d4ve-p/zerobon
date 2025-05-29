@@ -19,6 +19,9 @@ return new class extends Migration
             $table->dateTime("end_date");
 
             // Foreign Keys
+            $table->unsignedBigInteger("voucher_id");
+
+            // Foreign keys constraint
             $table->foreign("voucher_id")->references("id")->on("vouchers")->onDelete("cascade")->onUpdate("cascade");
         });
     }
