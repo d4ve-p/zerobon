@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('challenges', function (Blueprint $table) {
+        Schema::create('vouchers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text("description");
-            $table->dateTime("start_date");
-            $table->dateTime("end_date");
 
-            // Foreign Keys
-            $table->foreign("voucher_id")->references("id")->on("vouchers")->onDelete("cascade")->onUpdate("cascade");
+            $table->string("name");
+            $table->integer("percentage");
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('challenges');
+        Schema::dropIfExists('vouchers');
     }
 };

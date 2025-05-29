@@ -4,13 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Challenge extends Model
+class Voucher extends Model
 {
     //
     protected $fillable = [
-        "description",
-        "start_date",
-        "end_date",
-        "voucher_id"
+        "name",
+        "percentage",
     ];
 }
