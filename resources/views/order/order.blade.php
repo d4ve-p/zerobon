@@ -26,34 +26,22 @@
         </tr>
     </thead>
     <tbody>
+        @foreach ($purchases as $purchase )
         <tr class="py-[10px] text-[20px] box-border">
             <th scope="row" class="px-6 py-4 font-medium box-border">
-                1. 
+                {{$loop->iteration}}. 
             </th>
             <th scope="row" class="px-6 py-4 font-medium box-border">
-                ABCDEFGHJKLMNOP
+                {{ $purchase->id }}
             </th>
             <th scope="row" class="px-6 py-4 font-medium box-border">
                 Successfully Paid
             </th>
             <th scope="row" class="px-6 py-4 font-medium box-border">
-                Delivered
+                {{ $purchase->status }}
             </th>
         </tr>
-        <tr class="py-[10px] text-[20px] box-border">
-            <th scope="row" class="px-6 py-4 font-medium box-border">
-                2. 
-            </th>
-            <th scope="row" class="px-6 py-4 font-medium box-border">
-                ABCDEFGHJKLMNOP
-            </th>
-            <th scope="row" class="px-6 py-4 font-medium box-border">
-                Successfully Paid
-            </th>
-            <th scope="row" class="px-6 py-4 font-medium box-border">
-                Delivered
-            </th>
-        </tr>
+        @endforeach
     </tbody>
 </table>
 </div>

@@ -10,9 +10,10 @@ class PurchaseItem extends Model
 {
     //
     protected $fillable = [
+        "purchase_id",
         "product_id",
         "quantity",
-        "productPrice"
+        "product_price"
     ];
     /**
      * Relationships

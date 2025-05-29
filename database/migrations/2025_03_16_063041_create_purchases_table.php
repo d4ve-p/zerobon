@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->date('purchaseDate');
+            $table->unsignedBigInteger("total");
+            $table->enum("status", ["In Packing", "In Delivery", "Delivered"])->default("In Delivery");
 
             /**
              * Foreign keys

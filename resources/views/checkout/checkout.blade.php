@@ -106,7 +106,10 @@
             <p class="font-semibold w-[480px] ">Total</p>
             <p class="font-medium">Rp. {{ $pending->total }}</p>
         </div>
-        <button class="text-white bg-[var(--color-green-700)] text-[22px] font-semibold w-[716px] h-[47px] rounded-[15px]">View Order Status</button>
+        <form method="POST" action="{{ route("checkout.purchase") }}">
+            @csrf
+            <input type="submit" class="text-white bg-[var(--color-green-700)] text-[22px] font-semibold w-[716px] h-[47px] rounded-[15px]" value="View Order Status" />
+        </form>
     </div>
 </div>
 @endif

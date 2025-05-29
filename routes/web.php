@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -56,6 +57,8 @@ Route::middleware(['auth'])->group(function() {
             ->name('checkout');
         Route::post('/', [CartController::class, 'checkoutCart'])
             ->name('checkout-post');
+        Route::post('/purchase', [PurchaseController::class, 'makePurchase'])
+            ->name('checkout.purchase');
     });
 
     // Carts
@@ -75,7 +78,7 @@ Route::middleware(['auth'])->group(function() {
 
     // Purchases
     Route::prefix('purchases')->group(function() {
-        Route::view('/', function() { })
+        Route::get('/', [PurchaseController::class, 'getAllPurchase'])
             ->name('purchases');
         Route::get('/{id}', function() {})
             ->name('purchase-detail');
