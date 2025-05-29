@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProductController;
-use App\Livewire\CreateProduct;
+use App\Http\Controllers\PurchaseController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -15,7 +16,7 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 // Products
-Route::view('products', 'products.products')
+Route::get('products', [ProductController::class, 'products'])
     ->name('products');
 Route::view('products/create', 'products.create-product')
     ->name('create-product');
@@ -52,19 +53,35 @@ Route::middleware(['auth'])->group(function() {
 
     // Checkout
     Route::prefix('checkout')->group(function() {
-        Route::view('/', function() { })
+        Route::get('/', [CartController::class, 'checkOutPage'])
             ->name('checkout');
+        Route::post('/', [CartController::class, 'checkoutCart'])
+            ->name('checkout-post');
+        Route::post('/purchase', [PurchaseController::class, 'makePurchase'])
+            ->name('checkout.purchase');
     });
 
     // Carts
     Route::prefix('carts')->group(function() {
-        Route::view('/', 'carts.cart')
+        Route::get('/', [CartController::class, 'cartPage'])
         ->name('carts');
+        
+        Route::post('/', [CartController::class, 'finalizeCheckout'])
+        ->name('finalize-checkout');
+
+        Route::post('/add', [CartController::class, 'addToCart'])
+        ->name('cart.add');
+
+        Route::post('/delete', [CartController::class, 'removeItemFromCart'])
+        ->name('cart.delete');
+
+        Route::post('/update', [CartController::class, 'editCartItem'])
+        ->name('cart.update');
     });
 
     // Purchases
     Route::prefix('purchases')->group(function() {
-        Route::view('/', function() { })
+        Route::get('/', [PurchaseController::class, 'getAllPurchase'])
             ->name('purchases');
         Route::get('/{id}', function() {})
             ->name('purchase-detail');

@@ -9,7 +9,7 @@ class Donation extends Model
 {
     //
     protected $fillable = [
-        "donationValue"
+        "donation_value"
     ];
 
     function user(): BelongsTo

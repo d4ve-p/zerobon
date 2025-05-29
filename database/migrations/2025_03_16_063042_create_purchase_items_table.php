@@ -16,24 +16,24 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('quantity');
-            $table->integer('productPrice');
+            $table->integer('product_price');
 
             /**
              * Foreign key
              */
-            $table->unsignedBigInteger('productId');
-            $table->unsignedBigInteger('purchaseId');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('purchase_id');
 
             /**
              * Foreign Constraints
              */
-            $table->foreign('productId')->references('id')->on('products');
-            $table->foreign('purchaseId')->references('id')->on('purchases');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('purchase_id')->references('id')->on('purchases');
 
             /**
              * Unique constraint
              */
-            $table->unique(['productId', 'purchaseId']);
+            $table->unique(['product_id', 'purchase_id']);
         });
     }
 

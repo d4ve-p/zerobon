@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('pending_purchases', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // foreign key
+            $table->text("address");
+            $table->unsignedBigInteger("total");
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            // Foreign
+            $table->unsignedBigInteger("user_id")->unique();
+
+            
         });
     }
 
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('pending_purchases');
     }
 };

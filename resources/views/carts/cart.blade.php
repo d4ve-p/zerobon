@@ -11,7 +11,7 @@
     <div class="absolute z-[100] w-[691px] h-[565px] bg-white flex flex-col top-[50%] left-[50%] translate-[-50%]">
         <div class="flex px-3 py-3">
             <div class="flex-1 text-[29px] font-semibold pl-[30px]">Choose Voucher</div>
-            <i id="voucher-close" class="fa-solid fa-circle-xmark text-[var(--color-green-700)] text-[40px] hover:cursor-pointer" onclick="closePopup"></i>
+            <i id="voucher-close" class="fa-solid fa-circle-xmark text-[var(--color-green-700)] text-[40px] hover:cursor-pointer" onclick="closePopup()"></i>
         </div>
         <hr class="border-[2.5px]" />
         <div class="flex-1 flex flex-col overflow-y-scroll max-h-[380px] py-12 gap-4">
@@ -41,22 +41,25 @@
         </div>
         <div class="w-full flex justify-center">
             {{-- TODO: Apply Voucher Logic --}}
-            <button id="voucher-apply" class="rounded-[15px] bg-[var(--color-green-700)] text-white text-[24px] w-[259px] h-[69px] hover:cursor-pointer mt-6">Apply Now</button>
+            <button type="button" id="voucher-apply" class="rounded-[15px] bg-[var(--color-green-700)] text-white text-[24px] w-[259px] h-[69px] hover:cursor-pointer mt-6" onclick="closePopup()">Apply Now</button>
         </div>
     </div> 
     </form>
 </div>
 
 {{-- If cart empty --}}
-<div class="w-full h-full flex-col justify-center items-center hidden">
-    <p class="text-[30px] text-[var(--color-green-700)] font-bold">Oops! Looks like your bag is empty</p>
-    <img src="{{asset("cart-empty.png")}}" class="w-[400px] h-[300px]"/>
-    <p class="font-medium text-[25px] w-[523px] text-center">Start shopping now and discover the best products just for you! 
-Don't miss out—add your favorites to your bag today! </p>
-    <button class="my-[20px] text-[20px] text-white bg-[var(--color-green-700)] rounded-[20px] w-[264px] h-[56px] font-semibold hover:cursor-pointer" onclick="window.location.href='{{route("products")}}'">Back to Shopping</button>
-</div>
+@if ($items->count() == 0)
+    <div class="w-full h-full flex flex-col justify-center items-center ">
+        <p class="text-[30px] text-[var(--color-green-700)] font-bold">Oops! Looks like your bag is empty</p>
+        <img src="{{asset("cart-empty.png")}}" class="w-[400px] h-[300px]"/>
+        <p class="font-medium text-[25px] w-[523px] text-center">Start shopping now and discover the best products just for you! 
+    Don't miss out—add your favorites to your bag today! </p>
+        <button class="my-[20px] text-[20px] text-white bg-[var(--color-green-700)] rounded-[20px] w-[264px] h-[56px] font-semibold hover:cursor-pointer" onclick="window.location.href='{{route("products")}}'>Back to Shopping</button>
+    </div>
+@else
 {{-- Else --}}
-<form>
+<form method="POST" action="{{ route('finalize-checkout') }}">
+@csrf
 <div class="w-full h-full px-[80px]">
 <div class="w-full flex flex-col gap-[10px] box-border bg-[var(--color-cream-500)] ">
 <table class="w-full text-sm text-center box-border">
@@ -65,7 +68,7 @@ Don't miss out—add your favorites to your bag today! </p>
             {{-- TODO: Select all logic --}}
             <th scope="col" class="px-6 py-3 box-border">
                 <div class="w-full flex gap-6 items-center">
-                    <input type="checkbox" id="cart-select-all" class="rounded-none"/>
+                    <input checked type="checkbox" id="cart-select-all" class="rounded-none" onchange="checkOrUncheckAll()"/>
                     <p>Select All</p>
                 </div>
             </th>
@@ -81,53 +84,39 @@ Don't miss out—add your favorites to your bag today! </p>
         </tr>
     </thead>
     <tbody>
-        <tr class="h-[245px] bg-[var(--color-cream-500)] font-semibold text-[24px] box-border">
+        @foreach ($items as $item)
+            <tr class="h-[245px] bg-[var(--color-cream-500)] font-semibold text-[24px] box-border" id={{"tr-".$item->id}}>
             <th scope="row" class="flex px-6 py-3 gap-6 h-[245px] box-border items-center">
-                <input type="checkbox" id="cart-select-all" class="rounded-none"/>
-                <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
+                <input type="checkbox" id="cart-select" value="{{ $item->id }}" class="rounded-none" name="selected-products" checked />
+                @if ($item->product->image_filename === null)
+                    <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
+                @else
+                    <img src="{{ Storage::disk('product_images')->url($item->product->image_filename) }}" class="w-[125px] h-[150px]"/>
+                @endif
             </th>
             <th scope="row" class="px-6 py-4 font-medium box-border">
-                Zerobon Totebag
+                {{ $item->product->name }}
             </th>
             <th scope="row" class="px-6 py-4 font-medium box-border">
-                Rp.25000
+                Rp.{{ $item->product->price }}
             </th>
             {{-- TODO: --}}
             {{-- Delete route: /cart/{id}/delete --}}
             {{-- Value change route: /card/{id}/set --}}
+            {{-- Delete/Change value, should be done separately from form action --}}
             <th scope="row" class="px-6 py-4 font-medium flex justify-center box-border">
                 <div class="flex gap-4 items-center">
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-solid fa-trash" onclick="deleteCartItem('{{route('cart.delete')}}', {{ $item->id }})"></i>
+                    
                     <div class="w-[165px] h-[44px] items-center flex bg-white justify-between border-2 border-[var(--color-green-700)] rounded-[15px] px-[5px] box-border">
-                        <i id="popup-substract" class="fa-solid fa-minus hover:cursor-pointer"></i>
-                        <input id="number-input" type="number" class="w-[52px] h-[26px] text-[18px] outline-none border-none text-center number-input font-semibold" value="1"/>
-                        <i id="popup-add" class="fa-solid fa-plus   hover:cursor-pointer"></i>
+                        <i id="popup-substract" class="fa-solid fa-minus hover:cursor-pointer" onclick="decrement('{{$item->id}}')"></i>
+                        <input id="{{"quantity-".$item->id }}" type="number" class="number-input w-[52px] h-[26px] text-[18px] text-center number-input font-semibold" value="{{ $item->quantity }}" onchange="changeCartItemValue('{{route('cart.update')}}', {{$item->id}})"/>
+                        <i id="popup-add" class="fa-solid fa-plus   hover:cursor-pointer" onclick="increment('{{$item->id}}')"></i>
                     </div>
                 </div>
             </th>
         </tr>
-        <tr class="h-[245px] bg-[var(--color-cream-500)] font-semibold text-[24px] box-border">
-            <th scope="row" class="flex px-6 py-3 gap-6 h-[245px] box-border items-center">
-                <input type="checkbox" id="cart-select-all" class="rounded-none"/>
-                <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
-            </th>
-            <th scope="row" class="px-6 py-4 font-medium box-border">
-                Zerobon Totebag
-            </th>
-            <th scope="row" class="px-6 py-4 font-medium box-border">
-                Rp.25000
-            </th>
-            <th scope="row" class="px-6 py-4 font-medium flex justify-center box-border">
-                <div class="flex gap-4 items-center">
-                    <i class="fa-solid fa-trash"></i>
-                    <div class="w-[165px] h-[44px] items-center flex bg-white justify-between border-2 border-[var(--color-green-700)] rounded-[15px] px-[5px] box-border">
-                        <i id="popup-substract" class="fa-solid fa-minus hover:cursor-pointer"></i>
-                        <input id="number-input" type="number" class="w-[52px] h-[26px] text-[18px] outline-none border-none text-center number-input font-semibold" value="1"/>
-                        <i id="popup-add" class="fa-solid fa-plus   hover:cursor-pointer"></i>
-                    </div>
-                </div>
-            </th>
-        </tr>
+        @endforeach
     </tbody>
 </table>
 <div class="flex justify-between px-6 py-3 box-border">
@@ -143,22 +132,25 @@ Don't miss out—add your favorites to your bag today! </p>
 <div class="flex justify-between px-6 py-3 items-center">
     <div class="flex gap-2 items-center">
         <p class="text-[30px] font-bold">Total Price: </p>
-        <p class="text-[30px] font-semibold text-[var(--color-green-700)]">Rp140.000</p>
+        <p class="text-[30px] font-semibold text-[var(--color-green-700)]" id="totalPrice">Rp{{$subtotal}}</p>
     </div>
     <input type="submit" value="Checkout" class="w-[259px] h-[69px] text-[24px] text-white font-semibold bg-[var(--color-green-700)] rounded-[15px] "/>
 </div>
 </div>
 </div>
 </form>
+@endif
+
+
 
 @endsection 
 
 <style>
-#number-input::-webkit-inner-spin-button {    
+input[type="number"]::-webkit-inner-spin-button {    
     -webkit-appearance: none;
     -moz-appearance: textfield;
 }
-#number-input {
+input[type="number"] {
     outline: none;
     border: none;
 }
@@ -189,7 +181,6 @@ window.onload = function() {
     voucherApply.addEventListener('click', () => {
         closePopup()
     })
-
 }
 
 function openPopup() {
@@ -202,4 +193,66 @@ function closePopup() {
     overlayPopup.classList.add("hidden")
 }
 
+function deleteCartItem(action_url, id) {
+    const csrfToken = document.getElementsByName("_token")[0].value
+
+    fetch(action_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ id: id })
+    }).then(() => {
+        window.location.reload()
+    }).error((err) => {
+        console.log(err)
+    })
+}
+
+function increment(id) {
+    const inc = document.getElementById("quantity-"+id)
+    inc.value = parseInt(inc.value) + 1
+
+    changeCartItemValue('{{route("cart.update")}}', id)
+}
+
+function decrement(id) {
+    const dec = document.getElementById("quantity-"+id)
+    dec.value = Math.max(1, parseInt(dec.value) - 1)
+
+    changeCartItemValue('{{route("cart.update")}}', id)
+}
+
+function changeCartItemValue(action_url, id) {
+    const csrfToken = document.getElementsByName("_token")[0].value
+    const itemQuantity = document.getElementById("quantity-" + id)
+
+    fetch(action_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ id: id, quantity: itemQuantity.value })
+    }).then(async (resp) => {
+        const data = await resp.json()
+        console.log(data)
+        let subtotalContainer = document.getElementById("totalPrice")
+        subtotalContainer.innerHTML = `Rp${data.total_price}`
+    })
+}
+
+function checkOrUncheckAll() {
+    const universalBox = document.getElementById("cart-select-all")
+    const value = universalBox.checked
+
+    const allBoxes = document.getElementsByName("selected-products")
+
+    for(const box of allBoxes) {
+        box.checked = value
+    }
+}
 </script>

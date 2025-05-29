@@ -19,14 +19,14 @@ return new class extends Migration
             /**
              * Foreign Keys
              */
-            $table->unsignedBigInteger('authorId');
-            $table->unsignedBigInteger('forumId');
+            $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('forum_id');
 
             /**
              * Foreign constraints
              */
-            $table->foreign('authorId')->references('id')->on('users');
-            $table->foreign('forumId')->references('id')->on('forums');
+            $table->foreign('author_id')->references('id')->on('users');
+            $table->foreign('forum_id')->references('id')->on('forums');
         });
     }
 
