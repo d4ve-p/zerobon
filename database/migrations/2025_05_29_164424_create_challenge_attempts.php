@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('challenge_attemps', function (Blueprint $table) {
+        Schema::create('challenge_attempts', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string("submission_image_path");

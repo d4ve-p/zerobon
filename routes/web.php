@@ -130,9 +130,9 @@ Route::middleware(['auth'])->group(function() {
             ->name('challenge');
         Route::get('/{id}', [ChallengeController::class, "getChallengeDetail"])
             ->name('challenge-detail');
-        Route::get('/start/{id}', function() { })
+        Route::get('/start/{id}', [ChallengeController::class, "startChallengePage"])
             ->name('start-challenge');
-        Route::post('/start/{id}', function() { })
+        Route::post('/start', [ChallengeController::class, "submitChallenge"])
             ->name('submit-challenge');
     });
 });
