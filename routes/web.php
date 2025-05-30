@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
@@ -45,12 +46,6 @@ Route::prefix('social-activities')->group(function() {
 
 
 Route::middleware(['auth'])->group(function() {
-    // Order
-    Route::prefix('order')->group(function() {
-        Route::view('/', function() { })
-            ->name('order');
-    });
-
     // Checkout
     Route::prefix('checkout')->group(function() {
         Route::get('/', [CartController::class, 'checkOutPage'])
@@ -131,7 +126,7 @@ Route::middleware(['auth'])->group(function() {
 
     // Challenge
     Route::prefix('challenge')->group(function() {
-        Route::get('/', function() { })
+        Route::get('/', [ChallengeController::class, "getChallenges"])
             ->name('challenge');
         Route::get('/{id}', function() { })
             ->name('challenge-detail');
