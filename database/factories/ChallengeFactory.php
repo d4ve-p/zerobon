@@ -18,7 +18,10 @@ class ChallengeFactory extends Factory
     {
         return [
             "name" => fake()->name,
-            "percentage" => fake()->numberBetween(10, 50)
+            "description" => fake()->text(),
+            "point_reward" => fake()->numberBetween(10, 50),
+            "start_date" => fake()->dateTimeBetween("now", "+5days"),
+            "end_date" => fake()->dateTimeBetween("+10days", "+30days")
         ];
     }
 }

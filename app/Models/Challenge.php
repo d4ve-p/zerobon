@@ -10,6 +10,8 @@ class Challenge extends Model
     use HasFactory;
     //
     protected $fillable = [
+        "name",
+        "point_reward",
         "description",
         "start_date",
         "end_date",

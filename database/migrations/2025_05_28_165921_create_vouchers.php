@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->string("name");
             $table->integer("percentage");
+            $table->integer("point_price");
         });
     }
 

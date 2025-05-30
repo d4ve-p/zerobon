@@ -14,15 +14,12 @@ return new class extends Migration
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string("name");
+            $table->integer("point_reward");
             $table->text("description");
             $table->dateTime("start_date");
             $table->dateTime("end_date");
 
-            // Foreign Keys
-            $table->unsignedBigInteger("voucher_id");
-
-            // Foreign keys constraint
-            $table->foreign("voucher_id")->references("id")->on("vouchers")->onDelete("cascade")->onUpdate("cascade");
         });
     }
 
