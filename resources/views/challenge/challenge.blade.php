@@ -17,7 +17,7 @@
                     </p>
                     <div class="flex items-center gap-2">
                         <p class="font-bold text-[20px] text-nowrap">[+15 points ]</p>
-                        <a href="{{ url("/challenge/test") }}" class="font-semibold text-[25px] underline">Details</a>
+                        <a href="{{ route("challenge-detail", $challenge->id) }}" class="font-semibold text-[25px] underline">Details</a>
                     </div>
                 </div>
             </div>

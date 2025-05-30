@@ -128,7 +128,7 @@ Route::middleware(['auth'])->group(function() {
     Route::prefix('challenge')->group(function() {
         Route::get('/', [ChallengeController::class, "getChallenges"])
             ->name('challenge');
-        Route::get('/{id}', function() { })
+        Route::get('/{id}', [ChallengeController::class, "getChallengeDetail"])
             ->name('challenge-detail');
         Route::get('/start/{id}', function() { })
             ->name('start-challenge');

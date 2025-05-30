@@ -22,4 +22,8 @@ class ChallengeController extends Controller
             "challenges" => $challenges
         ]);
     }
+
+    function getChallengeDetail($id): View {
+        return view("challenge.detail");
+    }
 }
