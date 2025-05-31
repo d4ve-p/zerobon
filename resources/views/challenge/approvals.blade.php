@@ -32,34 +32,26 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($attempts as $attempt)
                 <tr class="py-2 font-semibold text-[24px] box-border">
                     <th scope="row" class="px-6 py-4 font-medium box-border">
-                        1.
+                        {{ $loop->iteration }}
                     </th>
                     <th scope="row" class="px-6 py-4 font-medium box-border">
-                        Go to TreeFund and Donate Tree
+                        {{ $attempt->challenge->name }}
                     </th>
                     <th scope="row" class="px-6 py-4 font-medium box-border">
-                        Approved
+                        @if ($attempt->isApproved )
+                            <p class="text-[var(--color-green-700)]">Approved</p>
+                        @else
+                            <p class="text-red-700">Waiting Review</p>
+                        @endif
                     </th>
                     <th scope="row" class="px-6 py-4 font-medium box-border">
                         -
                     </th>
                 </tr>
-                <tr class="py-2 font-semibold text-[24px] box-border">
-                    <th scope="row" class="px-6 py-4 font-medium box-border">
-                        1.
-                    </th>
-                    <th scope="row" class="px-6 py-4 font-medium box-border">
-                        Go to TreeFund and Donate Tree
-                    </th>
-                    <th scope="row" class="px-6 py-4 font-medium box-border">
-                        Approved
-                    </th>
-                    <th scope="row" class="px-6 py-4 font-medium box-border">
-                        -
-                    </th>
-                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

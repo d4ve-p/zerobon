@@ -19,7 +19,7 @@
         <input type="hidden" name="id" value="{{$challenge->id}}" />
         <div class="flex flex-col gap-1">
             <p class="font-semibold text-[30px]">Username</p>
-            <input type="text" disabled class="w-full bg-white outline-none p-3 rounded-md border-2 border-[var(--color-green-500)] h-[57px]"/>
+            <input type="text" placeholder="{{Auth::user()->fullname}}" disabled class="w-full bg-white outline-none p-3 rounded-md border-2 border-[var(--color-green-500)] h-[57px]"/>
         </div>
         <div class="flex flex-col gap-1">
             <p class="font-semibold text-[30px]">Instagram Account</p>
@@ -27,7 +27,7 @@
         </div>
         <div class="flex flex-col gap-1">
             <p class="font-semibold text-[30px]">Challenge</p>
-            <input type="text" placeholder="Zerobon" class="w-full bg-white outline-none p-3 rounded-md border-2 border-[var(--color-green-500)] h-[57px]"/>
+            <input type="text" placeholder="{{$challenge->name}}" class="w-full bg-white outline-none p-3 rounded-md border-2 border-[var(--color-green-500)] h-[57px]"/>
         </div>
         <div class="flex flex-col gap-1">
             <p class="font-semibold text-[30px]">Upload File</p>

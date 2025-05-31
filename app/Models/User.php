@@ -70,6 +70,12 @@ class User extends Authenticatable
         return $this->hasMany(Purchase::class);
     }
 
+    // Get User challegne attempts
+    function challenge_attempts(): HasMany
+    {
+        return $this->hasMany(ChallengeAttempt::class);
+    }
+
     /**
      * Checks if user has specified role
      * @param string $role

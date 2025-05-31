@@ -128,12 +128,16 @@ Route::middleware(['auth'])->group(function() {
     Route::prefix('challenge')->group(function() {
         Route::get('/', [ChallengeController::class, "getChallenges"])
             ->name('challenge');
-        Route::get('/{id}', [ChallengeController::class, "getChallengeDetail"])
-            ->name('challenge-detail');
+
         Route::get('/start/{id}', [ChallengeController::class, "startChallengePage"])
             ->name('start-challenge');
+        Route::get('/approvals', [ChallengeController::class, "getChallengeStatus"])
+            ->name('challenge-approval');
         Route::post('/start', [ChallengeController::class, "submitChallenge"])
             ->name('submit-challenge');
+
+        Route::get('/{id}', [ChallengeController::class, "getChallengeDetail"])
+            ->name('challenge-detail');
     });
 });
 

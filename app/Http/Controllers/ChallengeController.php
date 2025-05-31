@@ -82,4 +82,12 @@ class ChallengeController extends Controller
 
         return redirect(route("challenge"));
     }
+
+    function getChallengeStatus(): View {
+        $user = Auth::user();
+
+        return view("challenge.approvals", [
+            "attempts" => $user->challenge_attempts
+        ]);
+    }
 }

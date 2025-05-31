@@ -5,7 +5,7 @@
     <div class="w-[1111px] flex-col items-center box-border">
         <p class="py-[50px] text-[50px] font-semibold text-[var(--color-green-900)] text-center">To-Do-Challenge</p>
         <div class="flex w-full justify-end mb-[50px]">
-            <button class="text-[24px] font-semibold bg-[var(--color-green-700)] text-white px-6 py-4 rounded-[15px]">Check Challenge Approval</button>
+            <a href="{{route("challenge-approval")}}"><button class="text-[24px] font-semibold bg-[var(--color-green-700)] text-white px-6 py-4 rounded-[15px]">Check Challenge Approval</button></a>
         </div>
         {{-- TODO: Get all unattempted challenges --}}
         <div class="flex flex-col gap-7">
