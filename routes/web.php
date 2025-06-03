@@ -32,8 +32,8 @@ Route::get('products/delete/{id}', [ProductController::class, 'delete'])
 // Articles
 Route::prefix('articles')->group(function() {
     Route::get('/', [ArticleController::class, 'index'])->name('articles');
-    Route::get('/{id}', function() {  })
-        ->name('articles-detail'); 
+    Route::get('/article-search', [ArticleController::class, 'search'])->name('articles.search');
+    Route::get('/{id}', [ArticleController::class, 'articleDetail'])->name('articles.detail');
 });
 
 // Social Activities

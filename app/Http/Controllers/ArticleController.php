@@ -24,4 +24,21 @@ class ArticleController extends Controller
 
         return view('articles.articles', compact('headline', 'articles', 'sidebarArticles'));
     }
+
+     public function search(Request $request){
+        $search = $request->input('search');
+
+        // Ambil semua artikel yang cocok dengan keyword
+        $articles = Article::where('title', 'LIKE', '%' . $search . '%')
+            ->orderBy('publish_date', 'desc')
+            ->get();
+
+        return view('articles.articles-search', compact('search', 'articles'));
+    }
+
+    public function articleDetail($id){
+        $article = Article::findOrFail($id);
+        return view('articles.articles-detail', compact('article'));
+
+    }
 }
