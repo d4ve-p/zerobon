@@ -2,6 +2,8 @@
 
 @section('content')
 
+<div class="min-h-screen bg-[#FFF8E8]">
+
 <!-- Hero Section -->
 <section class="relative bg-cover bg-center bg-no-repeat py-32"
          style="background-image: url('{{ asset('hero-bg.jpg') }}');">
@@ -88,5 +90,5 @@
     </aside>
 
 </div>
-
+</div>
 @endsection
