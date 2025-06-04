@@ -10,6 +10,7 @@ class Voucher extends Model
     protected $fillable = [
         "name",
         "percentage",
-        "point_price"
+        "point_price",
+        "image_path"
     ];
 }
