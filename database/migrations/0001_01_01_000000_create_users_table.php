@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
+            $table->unsignedBigInteger('points');
             $table->rememberToken();
             $table->timestamps();
             $table->enum('role', ['guest', 'member', 'admin'])->default('member');
