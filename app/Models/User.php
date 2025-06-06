@@ -76,6 +76,11 @@ class User extends Authenticatable
         return $this->hasMany(ChallengeAttempt::class);
     }
 
+    function userVouchers(): HasMany
+    {
+        return $this->hasMany(UserVoucher::class);
+    }
+
     /**
      * Checks if user has specified role
      * @param string $role
