@@ -5,6 +5,7 @@ use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -96,7 +97,7 @@ Route::middleware(['auth'])->group(function() {
 
     // Vouchers
     Route::prefix('vouchers')->group(function() {
-        Route::get('/', function() { })
+        Route::get('/', [VoucherController::class, 'vouchers'])
             ->name('vouchers');
         Route::post('/use', function() { })
             ->name('vouchers-use-post');
