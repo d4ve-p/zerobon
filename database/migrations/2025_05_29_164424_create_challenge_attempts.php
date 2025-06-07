@@ -23,7 +23,7 @@ return new class extends Migration
 
             // Foreign Constraint
             $table->foreign("user_id")->references("id")->on("users");
-            $table->foreign('challenge_id')->references('id')->on('challenges');
+            $table->foreign('challenge_id')->references('id')->on('challenges')->delete('cascade');
 
             // Unique Constraint
             $table->unique(['user_id', 'challenge_id']);
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('challenge_attemps');
+        Schema::dropIfExists('challenge_attempts');
     }
 };

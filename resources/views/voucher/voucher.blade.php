@@ -10,7 +10,7 @@
         <div class="flex flex-col">
             <div class="flex items-center gap-1">
                 <img class="w-[65px] h-[65px]" src="{{asset("/carbon_footprint.png")}}"/>
-                <p class="font-semibold text-[55px] text-[var(--color-green-700)]">1,500</p>
+                <p class="font-semibold text-[55px] text-[var(--color-green-700)]">{{ Auth::user()->points }}</p>
                 <p class="font-semibold text-[35px]">points</p>
             </div>
         </div>
@@ -22,31 +22,103 @@
     </div>
     </div>
 
-    <div class="w-full flex gap-2 flex-wrap justify-center gap-y-4">
+    <div class="w-full flex gap-10 flex-wrap justify-center gap-y-4">
+        <form>@csrf</form>
+        @foreach($vouchers as $voucher)
         <div class=" py-6 px-6 flex flex-col justify-between items-center w-[396px] h-[396px] bg-white rounded-xl drop-shadow-lg">
             <div class="bg-black w-[358px] h-[220px]"></div>
-            <p class="font-semibold text-[22px]">I-Voucher Indomaret Worth Rp100.000</p>
+            <p class="font-semibold text-[22px]">{{ $voucher->name }} Worth Rp{{ $voucher->amount }}</p>
             <div class="flex justify-between items-center w-full">
-                <p class="text-[15px] text-gray-400">8,600 Points</p>
-                <div class="bg-[var(--color-green-700)] text-white text-center py-2 px-10 rounded-3xl font-semibold text-[20px]">Redeem</div>
+                <p class="text-[15px] text-gray-400">{{ $voucher->point_price }} Points</p>
+                <div class="bg-[var(--color-green-700)] text-white text-center py-2 px-10 rounded-3xl font-semibold text-[20px]" onclick="handleRedeem({{ Auth::user()->points }}, {{ $voucher->id }}, {{ $voucher->point_price }})">Redeem</div>
             </div>
         </div>
-        <div class=" py-6 px-6 flex flex-col justify-between items-center w-[396px] h-[396px] bg-white rounded-xl drop-shadow-lg">
-            <div class="bg-black w-[358px] h-[220px]"></div>
-            <p class="font-semibold text-[22px]">I-Voucher Indomaret Worth Rp100.000</p>
-            <div class="flex justify-between items-center w-full">
-                <p class="text-[15px] text-gray-400">8,600 Points</p>
-                <div class="bg-[var(--color-green-700)] text-white text-center py-2 px-10 rounded-3xl font-semibold text-[20px]">Redeem</div>
-            </div>
-        </div>
-        <div class=" py-6 px-6 flex flex-col justify-between items-center w-[396px] h-[396px] bg-white rounded-xl drop-shadow-lg">
-            <div class="bg-black w-[358px] h-[220px]"></div>
-            <p class="font-semibold text-[22px]">I-Voucher Indomaret Worth Rp100.000</p>
-            <div class="flex justify-between items-center w-full">
-                <p class="text-[15px] text-gray-400">8,600 Points</p>
-                <div class="bg-[var(--color-green-700)] text-white text-center py-2 px-10 rounded-3xl font-semibold text-[20px]">Redeem</div>
+        @endforeach
+    </div>
+
+    <div class="fixed w-screen h-screen top-0 hidden" id="not-enough">
+        <div class="w-full h-full absolute bg-[var(--color-cream-700)] opacity-[50%]"></div>
+        <div class="absolute left-[50%] top-[50%] translate-[-50%] flex flex-col p-5 bg-white drop-shadow-2xl w-[723px]">
+            <div class="w-full flex flex-col">
+                <div class="flex justify-end">
+                    <i class="fa-solid fa-circle-xmark flex text-[40px] text-[var(--color-green-700)] hover:cursor-pointer" onclick="closeNotEnoughButton()"></i>
+                </div>
+                <div class="flex flex-col w-full gap-5">
+                    <div class="flex justify-center text-[40px] font-bold text-[var(--color-green-900)]">Oops!</div>
+                    <div class="flex justify-center">
+                        <i class="fa-solid fa-face-frown text-[128px] text-[var(--color-green-700)]" ></i>
+                    </div>
+                    <p class="font-semibold text-[22px] text-[var(--color-green-900)] text-center">You don’t have enough points to redeem this voucher yet. Keep collecting!</p>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="fixed w-screen h-screen top-0 hidden" id="enough">
+        <div class="w-full h-full absolute bg-[var(--color-cream-700)] opacity-[50%]"></div>
+        <div class="absolute left-[50%] top-[50%] translate-[-50%] flex flex-col p-5 bg-white drop-shadow-2xl w-[723px]">
+            <div class="w-full flex flex-col">
+                <div class="flex justify-end">
+                    <i class="fa-solid fa-circle-xmark flex text-[40px] text-[var(--color-green-700)] hover:cursor-pointer" onclick="closeEnoughButton()"></i>
+                </div>
+                <div class="flex flex-col w-full gap-5">
+                    <div class="flex justify-center text-[40px] font-bold text-[var(--color-green-900)]">Congratulations</div>
+                    <div class="flex justify-center">
+                        <i class="fa-solid fa-thumbs-up text-[128px] text-[var(--color-green-700)]" ></i>
+                    </div>
+                    <p class="font-semibold text-[22px] text-[var(--color-green-900)] text-center">The voucher has been successfully redeemed and you should receive a confirmation email within 24 hours of redeeming.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 @endsection
+
+<script defer>
+function handleRedeem(user_point, id, point_price) {
+    if(point_price > user_point) {
+        openNotEnoughButton()
+        return
+    }
+
+    openEnoughButton(id)
+}
+
+function closeNotEnoughButton() {
+    const notEnough = document.getElementById("not-enough")
+
+    notEnough.classList.add("hidden")
+}
+
+function openNotEnoughButton() {
+    const notEnough = document.getElementById("not-enough")
+
+    notEnough.classList.remove("hidden")
+}
+
+function closeEnoughButton() {
+    const enough = document.getElementById("enough")
+
+    enough.classList.add("hidden")
+
+    window.location.reload()
+}
+
+function openEnoughButton(id) {
+    const csrfToken = document.getElementsByName("_token")[0].value
+    const enough = document.getElementById("enough")
+
+    fetch("{{ route('voucher-redeem-post') }}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ id: id })
+    })
+
+    enough.classList.remove("hidden")
+}
+</script>

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string("name");
-            $table->integer("percentage");
+            $table->integer("amount");
             $table->integer("point_price");
             $table->string("image_path");
         });

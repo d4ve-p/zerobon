@@ -99,6 +99,8 @@ Route::middleware(['auth'])->group(function() {
     Route::prefix('vouchers')->group(function() {
         Route::get('/', [VoucherController::class, 'vouchers'])
             ->name('vouchers');
+        Route::post('/redeem', [VoucherController::class, 'redeem'])
+            ->name('voucher-redeem-post');
         Route::post('/use', function() { })
             ->name('vouchers-use-post');
     });

@@ -18,7 +18,7 @@ class VoucherFactory extends Factory
     {
         return [
             "name" => fake()->name(),
-            "percentage" => fake()->numberBetween(10, 50),
+            "amount" => fake()->numberBetween(10, 50),
             "point_price" => fake()->numberBetween(500, 1000),
             "image_path" => ""
         ];
