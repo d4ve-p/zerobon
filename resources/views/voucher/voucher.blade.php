@@ -1,7 +1,8 @@
 @extends('components.layouts.app.home-layout')
 
 @section('content')
-<div class="flex flex-1 h-full w-full flex-col">
+{{-- VoucherList Tab --}}
+<div class="flex flex-1 h-full w-full flex-col" id="voucher-list">
     <div class="h-[260px] py-10 bg-[var(--color-cream-700)] flex justify-between items-center box-border px-20">
         <div class="flex flex-col gap-4 text-[var(--color-green-700)]">
             <p class="font-extrabold text-[50px]">Hello {{Auth::user()->username}}</p>
@@ -120,5 +121,29 @@ function openEnoughButton(id) {
     })
 
     enough.classList.remove("hidden")
+}
+
+function enableVoucherList() {
+    const voucherList = document.getElementById("voucher-list")
+    voucherList.classList.remove("hidden")
+
+    disableMyVoucher()
+}
+
+function disableVoucherList() {
+    const voucherList = document.getElementById("voucher-list")
+    voucherList.classList.add("hidden")
+}
+
+function enableMyVoucher() {
+    const myVoucher = document.getElementById("my-voucher")
+    myVoucher.classList.remove("hidden")
+
+    disableVoucherList()
+}
+
+function disableMyVoucher() {
+    const myVoucher = document.getElementById("my-voucher")
+    myVoucher.classList.add("hidden")
 }
 </script>
