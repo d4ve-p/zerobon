@@ -15,4 +15,5 @@ class Voucher extends Model
         "point_price",
         "image_path"
     ];
+
 }

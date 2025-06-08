@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('user_vouchers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger("quantity");
+            $table->date("start_date");
+            $table->date("end_date");
 
             // Foreign keys
             $table->unsignedBigInteger("user_id");
@@ -24,7 +25,6 @@ return new class extends Migration
             $table->foreign("user_id")->references("id")->on("users");
             $table->foreign('voucher_id')->references('id')->on('vouchers');
 
-            $table->unique(["user_id", "voucher_id"]);
         });
     }
 

@@ -11,7 +11,13 @@ class UserVoucher extends Model
     protected $fillable = [
         "user_id",
         "voucher_id",
-        "quantity"
+        "start_date",
+        "end_date",
+    ];
+
+    protected $casts = [
+        'start_date' => 'date', 
+        'end_date' => 'date',
     ];
 
     function user(): BelongsTo 

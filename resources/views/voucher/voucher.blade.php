@@ -2,7 +2,7 @@
 
 @section('content')
 {{-- VoucherList Tab --}}
-<div class="flex flex-1 h-full w-full flex-col" id="voucher-list">
+<div class="flex flex-1 h-full w-full flex-col">
     <div class="h-[260px] py-10 bg-[var(--color-cream-700)] flex justify-between items-center box-border px-20">
         <div class="flex flex-col gap-4 text-[var(--color-green-700)]">
             <p class="font-extrabold text-[50px]">Hello {{Auth::user()->username}}</p>
@@ -18,12 +18,13 @@
     </div>
     <div class="flex justify-center mt-[30px]">
     <div class="flex font-bold text-[25px] border-[var(--color-green-700)] rounded-2xl h-[77px] justify-center border-2 w-fit overflow-hidden">
-        <div class="w-[273px] bg-[var(--color-green-700)] text-white flex items-center justify-center ">Voucher List</div>
-        <div class="w-[273px] text-[var(--color-green-700)] flex items-center justify-center">My Vouchers</div>
+        <div class="w-[273px] bg-[var(--color-green-700)] text-white flex items-center justify-center hover:cursor-pointer" id="tab-voucher-list" onclick="clickVoucherList()">Voucher List</div>
+        <div class="w-[273px] text-[var(--color-green-700)] flex items-center justify-center hover:cursor-pointer" id="tab-my-voucher" onclick="clickMyVoucher()">My Vouchers</div>
     </div>
     </div>
 
-    <div class="w-full flex gap-10 flex-wrap justify-center gap-y-4">
+    {{-- Voucher list --}}
+    <div class="w-full flex gap-10 flex-wrap justify-center gap-y-4" id="voucher-list">
         <form>@csrf</form>
         @foreach($vouchers as $voucher)
         <div class=" py-6 px-6 flex flex-col justify-between items-center w-[396px] h-[396px] bg-white rounded-xl drop-shadow-lg">
@@ -32,6 +33,33 @@
             <div class="flex justify-between items-center w-full">
                 <p class="text-[15px] text-gray-400">{{ $voucher->point_price }} Points</p>
                 <div class="bg-[var(--color-green-700)] text-white text-center py-2 px-10 rounded-3xl font-semibold text-[20px]" onclick="handleRedeem({{ Auth::user()->points }}, {{ $voucher->id }}, {{ $voucher->point_price }})">Redeem</div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+
+    {{-- my voucher list --}}
+    <div class="py-10 w-full flex gap-10 flex-wrap justify-center gap-y-4 hidden" id="my-voucher-list">
+        @foreach($user_vouchers as $user_voucher)
+        <div class="flex gap-5 w-[612px] drop-shadow-md rounded-md">
+            <img class="w-[181px]" src="{{ $user_voucher->voucher->image_path }}"/>
+            <div class="flex flex-col gap-5 flex-1">
+                <p class="font-semibold text-[22px]">{{ $user_voucher->voucher->name }}</p>
+                <div class="flex flex-col gap-1 w-full text-[18px]">
+                    <div class="flex w-full">
+                        <p class="w-[50%] font-semibold">Redeem Date:</p>
+                        <p>{{ $user_voucher->start_date->format('d M Y') }}</p>
+                    </div>
+                    <div class="flex w-full">
+                        <p class="w-[50%] font-semibold">Expired Date:</p>
+                        <p>{{ $user_voucher->end_date->format('d M Y') }}</p>
+                    </div>
+                    <div class="flex w-full">
+                        <p class="w-[50%] font-semibold">Status:</p>
+                        <p>Active</p>
+                    </div>
+                </div>
+                <p class="italic text-[15px]">(Voucher code has been sent to your email)</p>
             </div>
         </div>
         @endforeach
@@ -72,7 +100,6 @@
             </div>
         </div>
     </div>
-    
 </div>
 @endsection
 
@@ -145,5 +172,49 @@ function enableMyVoucher() {
 function disableMyVoucher() {
     const myVoucher = document.getElementById("my-voucher")
     myVoucher.classList.add("hidden")
+}
+
+function clickMyVoucher() {
+    const myVoucherTab = document.getElementById("my-voucher-list")
+    const voucherListTab = document.getElementById("voucher-list")
+
+    const voucherList = document.getElementById("tab-voucher-list")
+    const myVoucher = document.getElementById("tab-my-voucher")
+
+    // Make voucher list to white
+    voucherList.classList.remove("text-white")    
+    voucherList.classList.remove("bg-[var(--color-green-700)]")
+    voucherList.classList.add("text-[var(--color-green-700)]")
+    voucherList.classList.add("bg-white")
+
+    myVoucher.classList.remove("bg-white")
+    myVoucher.classList.remove("text-[var(--color-green-700)]")
+    myVoucher.classList.add("bg-[var(--color-green-700)]")
+    myVoucher.classList.add("text-white")
+
+    myVoucherTab.classList.remove("hidden")
+    voucherListTab.classList.add("hidden")
+}
+
+function clickVoucherList() {
+    const voucherListTab = document.getElementById("voucher-list")
+    const myVoucherTab = document.getElementById("my-voucher-list")
+
+    const voucherList = document.getElementById("tab-voucher-list")
+    const myVoucher = document.getElementById("tab-my-voucher")
+
+    // Make voucher list to white
+    voucherList.classList.add("text-white")    
+    voucherList.classList.add("bg-[var(--color-green-700)]")
+    voucherList.classList.remove("text-[var(--color-green-700)]")
+    voucherList.classList.remove("bg-white")
+
+    myVoucher.classList.add("bg-white")
+    myVoucher.classList.add("text-[var(--color-green-700)]")
+    myVoucher.classList.remove("bg-[var(--color-green-700)]")
+    myVoucher.classList.remove("text-white")
+
+    myVoucherTab.classList.add("hidden")
+    voucherListTab.classList.remove("hidden")
 }
 </script>
