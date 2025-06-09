@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -45,12 +47,6 @@ Route::prefix('social-activities')->group(function() {
 
 
 Route::middleware(['auth'])->group(function() {
-    // Order
-    Route::prefix('order')->group(function() {
-        Route::view('/', function() { })
-            ->name('order');
-    });
-
     // Checkout
     Route::prefix('checkout')->group(function() {
         Route::get('/', [CartController::class, 'checkOutPage'])
@@ -101,8 +97,10 @@ Route::middleware(['auth'])->group(function() {
 
     // Vouchers
     Route::prefix('vouchers')->group(function() {
-        Route::get('/', function() { })
+        Route::get('/', [VoucherController::class, 'vouchers'])
             ->name('vouchers');
+        Route::post('/redeem', [VoucherController::class, 'redeem'])
+            ->name('voucher-redeem-post');
         Route::post('/use', function() { })
             ->name('vouchers-use-post');
     });
@@ -131,14 +129,18 @@ Route::middleware(['auth'])->group(function() {
 
     // Challenge
     Route::prefix('challenge')->group(function() {
-        Route::get('/', function() { })
+        Route::get('/', [ChallengeController::class, "getChallenges"])
             ->name('challenge');
-        Route::get('/{id}', function() { })
-            ->name('challenge-detail');
-        Route::get('/start/{id}', function() { })
+
+        Route::get('/start/{id}', [ChallengeController::class, "startChallengePage"])
             ->name('start-challenge');
-        Route::post('/start/{id}', function() { })
+        Route::get('/approvals', [ChallengeController::class, "getChallengeStatus"])
+            ->name('challenge-approval');
+        Route::post('/start', [ChallengeController::class, "submitChallenge"])
             ->name('submit-challenge');
+
+        Route::get('/{id}', [ChallengeController::class, "getChallengeDetail"])
+            ->name('challenge-detail');
     });
 });
 
