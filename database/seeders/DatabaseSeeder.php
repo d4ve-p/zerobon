@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Challenge;
 use App\Models\Product;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Voucher;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,9 +16,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Product::factory()->count(20)->create();
-
         $this->call(
             ArticleSeeder::class
         );
+        Challenge::factory()->count(10)->create();
+        Voucher::factory()->count(10)->create();
     }
 }
