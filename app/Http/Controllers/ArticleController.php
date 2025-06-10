@@ -39,6 +39,10 @@ class ArticleController extends Controller
     public function articleDetail($id){
         $article = Article::findOrFail($id);
         return view('articles.articles-detail', compact('article'));
+    }
 
+    static function getArticlesByCount($count) {
+        $article = Article::all()->take($count);
+        return $article;
     }
 }
