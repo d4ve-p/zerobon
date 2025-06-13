@@ -31,7 +31,7 @@
 
              <!-- Kanan: Tombol Contact -->
             <div class="mt-1 z-10">
-            <a href="#contact"
+            <a href= "mailto:zerobon@gmail.com"
                 class="bg-white text-green-700 font-bold px-6 py-2 rounded-xl border border-green-700 hover:bg-green-100 transition">
                 Contact Us
             </a>
