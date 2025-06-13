@@ -7,6 +7,7 @@ use App\Http\Controllers\DonationController;
 use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\TreeFundController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -41,6 +42,11 @@ Route::prefix('articles')->group(function() {
 Route::prefix('social-activities')->group(function() {
     Route::get('/', function() { })
         ->name('social-activities');
+});
+
+// Tree Fund
+Route::prefix('tree-fund')->group(function() {
+    Route::get('/', [TreeFundController::class, 'donate']);
 });
 
 
