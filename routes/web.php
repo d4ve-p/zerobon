@@ -44,11 +44,7 @@ Route::prefix('social-activities')->group(function() {
         ->name('social-activities');
 });
 
-//Profile
-Route::prefix('profile')->group(function() {
-    Route::get('/faqs', function() {
-        return view('faqs.faqs');})->name('faqs');
-});
+
 
 Route::middleware(['auth'])->group(function() {
     // Checkout
@@ -145,6 +141,14 @@ Route::middleware(['auth'])->group(function() {
 
         Route::get('/{id}', [ChallengeController::class, "getChallengeDetail"])
             ->name('challenge-detail');
+    });
+
+    //Profile
+    Route::prefix('profile')->group(function() {
+        Route::get('/faqs', function() {
+            return view('faqs.faqs');})->name('faqs');
+        Route::get('/edit', function() {
+            return view('profile.edit-profile');})->name('edit.profile');
     });
 });
 
