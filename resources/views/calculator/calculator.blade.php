@@ -272,7 +272,14 @@
                 {{-- If you use a clean energy source, what energy is used? --}}
                 <div id="clean-energy-source-type-div" class="bg-[#EFDCC9] p-8 flex items-center justify-between">
                     <h4 class="text-[1.5rem] text-black font-bold">If you use a clean energy source,<br>what energy is used?</h4>
-                    <input type="text" id="clean-energy-source-type-input" class="rounded-lg p-2 w-[500px] h-[70px] text-center text-[1.25rem] font-bold bg-[#FFF8E8]">
+                    <select id="clean-energy-source-type-select" class="rounded-lg p-2 w-[500px] h-[70px] text-center text-[1.25rem] font-bold bg-[#FFF8E8]">
+                        <option value="solar">Solar PV</option>
+                        <option value="wind">Wind Power</option>
+                        <option value="hydro">Hydropower</option>
+                        <option value="geothermal">Geothermal</option>
+                        <option value="biomass">Biomass (Sustainable)</option>
+                        <option value="other_clean">Other Clean Energy</option>
+                    </select>
                 </div>
 
                 {{-- How many kWh are generated from clean energy sources? (kWh/month)? --}}
@@ -747,6 +754,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    
+    function updateTotalEmission() {
+        let total = 0;
+        for (const category in allEmissions) {
+            total += allEmissions[category];
+        }
+        document.querySelectorAll(".emission-total").forEach(el => el.textContent = total.toFixed(2));
+    }
+
+
     function createVehicleCard(index) {
         const wrapper = document.createElement("div");
         wrapper.className = "w-[80%] mx-auto rounded-lg p-6";
@@ -1065,23 +1082,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const electricityConsumptionInput = document.getElementById("electricity-consumption-input");
 
     const cleanEnergyInputsDiv = document.getElementById("clean-energy-inputs");
-    const cleanEnergySourceTypeInput = document.getElementById("clean-energy-source-type-input");
+    const cleanEnergySourceTypeSelect = document.getElementById("clean-energy-source-type-select");
     const kwhGeneratedInput = document.getElementById("kwh-generated-input");
 
-    let selectedPowerSource = null;
-
-    function updateTotalEmission() {
-        let total = 0;
-        for (const category in allEmissions) {
-            total += allEmissions[category];
-        }
-        document.querySelectorAll(".emission-total").forEach(el => el.textContent = total.toFixed(2));
-    }
+    let selectedPowerSource = null; 
 
     function updatePowerInputsVisibility() {
+        // Hide all input sections first
         plnInputsDiv.classList.add("hidden");
         cleanEnergyInputsDiv.classList.add("hidden");
 
+        // Show relevant input sections based on selected power source
         if (selectedPowerSource === '100-pln') {
             plnInputsDiv.classList.remove("hidden");
         } else if (selectedPowerSource === '100-clean-energy') {
@@ -1090,14 +1101,20 @@ document.addEventListener("DOMContentLoaded", function () {
             plnInputsDiv.classList.remove("hidden");
             cleanEnergyInputsDiv.classList.remove("hidden");
         }
+        // Recalculate emissions whenever visibility changes
         calculatePowerEmissions();
     }
 
+    // Add event listeners to power source buttons
     powerSourceButtons.forEach(btn => {
         btn.addEventListener("click", () => {
+            // Remove 'selected-btn' class from all buttons
             powerSourceButtons.forEach(b => b.classList.remove("selected-btn"));
+            // Add 'selected-btn' class to the clicked button
             btn.classList.add("selected-btn");
+            // Store the data-source-type value
             selectedPowerSource = btn.dataset.sourceType;
+            // Update input field visibility
             updatePowerInputsVisibility();
         });
     });
@@ -1106,36 +1123,61 @@ document.addEventListener("DOMContentLoaded", function () {
     powerInstalledInput.addEventListener("input", calculatePowerEmissions);
     electricityBillInput.addEventListener("input", calculatePowerEmissions);
     electricityConsumptionInput.addEventListener("input", calculatePowerEmissions);
-    cleanEnergySourceTypeInput.addEventListener("input", calculatePowerEmissions);
+    cleanEnergySourceTypeSelect.addEventListener("change", calculatePowerEmissions);
     kwhGeneratedInput.addEventListener("input", calculatePowerEmissions);
 
+
     const emissionFactorPower = {
-        pln_kwh: 0.70, // This should also ideally be based on IPCC for your grid
-        clean_energy_kwh: 0.01 // Assuming very low for clean energy
+        pln_kwh: 0.70, 
+        solar: 0.045,      // Solar PV (average life-cycle emissions, around 45 gCO2e/kWh)
+        wind: 0.011,       // Wind Power (average life-cycle emissions, around 11 gCO2e/kWh)
+        hydro: 0.024,      // Hydropower (average life-cycle emissions, around 24 gCO2e/kWh, can vary widely based on reservoir type)
+        geothermal: 0.045, // Geothermal (average life-cycle emissions, around 45 gCO2e/kWh)
+        biomass: 0.230,    // Biomass (sustainable, can vary greatly based on feedstock, around 230 gCO2e/kWh. Note: Burning biomass can release CO2, but if sustainably sourced, it's considered carbon neutral over its lifecycle in some frameworks)
+        other_clean: 0.020 // A generic low value for other clean sources, around 20 gCO2e/kWh
     };
 
     function calculatePowerEmissions() {
-        let currentPowerEmission = 0;
+        let currentPowerEmission = 0; // Initialize emission for this category
 
         const electricityConsumptionKWH = parseFloat(electricityConsumptionInput.value) || 0;
         const kwhGeneratedClean = parseFloat(kwhGeneratedInput.value) || 0;
+        // Get the selected clean energy type from the dropdown
+        const selectedCleanEnergyType = cleanEnergySourceTypeSelect.value;
 
         if (selectedPowerSource) {
             if (selectedPowerSource === '100-pln') {
+                // Emissions from 100% PLN usage
+                // (kWh/month * kgCO2e/kWh * 12 months/year) / 1000 kg/ton
                 currentPowerEmission = (electricityConsumptionKWH * emissionFactorPower.pln_kwh * 12) / 1000;
             } else if (selectedPowerSource === '100-clean-energy') {
-                currentPowerEmission = (kwhGeneratedClean * emissionFactorPower.clean_energy_kwh * 12) / 1000;
+                // Emissions from 100% clean energy usage
+                // Get the specific emission factor for the selected clean energy type
+                const cleanEnergyFactor = emissionFactorPower[selectedCleanEnergyType] || emissionFactorPower.other_clean;
+                currentPowerEmission = (kwhGeneratedClean * cleanEnergyFactor * 12) / 1000;
             } else if (selectedPowerSource === 'hybrid') {
+                // Calculate PLN consumption (total - clean generated, ensuring it's not negative)
                 const plnConsumptionKWH = Math.max(0, electricityConsumptionKWH - kwhGeneratedClean);
+                // Clean energy consumption is simply what's generated
                 const cleanConsumptionKWH = kwhGeneratedClean;
+
+                // Calculate emissions from PLN portion
                 const plnEmission = (plnConsumptionKWH * emissionFactorPower.pln_kwh * 12) / 1000;
-                const cleanEmission = (cleanConsumptionKWH * emissionFactorPower.clean_energy_kwh * 12) / 1000;
+
+                // Calculate emissions from clean energy portion
+                const cleanEnergyFactor = emissionFactorPower[selectedCleanEnergyType] || emissionFactorPower.other_clean;
+                const cleanEmission = (cleanConsumptionKWH * cleanEnergyFactor * 12) / 1000;
+
+                // Sum up both
                 currentPowerEmission = plnEmission + cleanEmission;
             }
         }
 
+        // Store the calculated emission in the global allEmissions object
         allEmissions.power = currentPowerEmission;
+        // Update the displayed emission sum for power
         document.querySelector(".emission-sum-power").textContent = currentPowerEmission.toFixed(2);
+        // Update the total emission across all categories
         updateTotalEmission();
     }
 
