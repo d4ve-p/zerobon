@@ -91,7 +91,7 @@ Route::middleware(['auth'])->group(function() {
     });
 
     // Carbon Footprint
-    Route::prefix('carbon-foorprints')->group(function() {
+    Route::prefix('carbon-footprints')->group(function() {
         Route::get('/', function() {
             return view('calculator.calculator');
         })->name('carbon-footprint');
