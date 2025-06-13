@@ -43,7 +43,12 @@ Route::prefix('social-activities')->group(function() {
         ->name('social-activities');
 });
 
-
+// Membership
+Route::prefix('membership')->group(function () {
+    Route::get('/', function () {
+        return view('membership.membership');
+    })->name('membership');
+});
 
 Route::middleware(['auth'])->group(function() {
     // Checkout
