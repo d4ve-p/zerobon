@@ -48,6 +48,15 @@ Route::prefix('membership')->group(function () {
     Route::get('/', function () {
         return view('membership.membership');
     })->name('membership');
+    Route::get('/verify-payment', function () {
+        return view('membership.verify-payment');
+    })->name('verify.payment');
+    Route::get('/email', function () {
+        return view('membership.email');
+    })->name('email');
+    Route::get('/success', function () {
+        return view('membership.congratulations');
+    })->name('membership.success');
 });
 
 Route::middleware(['auth'])->group(function() {

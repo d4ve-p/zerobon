@@ -50,7 +50,10 @@
             <!-- Price & Button -->
             <div class="w-full flex flex-col items-center gap-10 px-6 mb-10">
                 <p class="text-[30px] font-bold text-gray-900">Rp10.000/month</p>
-                <input type="submit" value="Join" class="bg-green-600 hover:bg-green-700 text-white w-[450px] h-[55px] text-[18px] font-bold rounded-full cursor-pointer" />
+                <a href="#"
+                    class="bg-green-600 hover:bg-green-700 text-white w-[450px] h-[55px] text-[18px] font-bold rounded-full cursor-pointer flex items-center justify-center">
+                    Join
+                </a>
             </div>
 
         </div>
