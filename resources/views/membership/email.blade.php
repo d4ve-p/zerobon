@@ -31,7 +31,7 @@
         <!-- Contact Help -->
         <p class="text-sm text-gray-600">
             Need help?
-            <a href="" class="text-green-600 hover:underline font-medium">Contact Us</a>
+            <a href="mailto:zerobon@gmail.com" class="text-green-600 hover:underline font-medium">Contact Us</a>
         </p>
     </div>
 </div>
