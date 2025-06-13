@@ -44,7 +44,11 @@ Route::prefix('social-activities')->group(function() {
         ->name('social-activities');
 });
 
-
+//Profile
+Route::prefix('profile')->group(function() {
+    Route::get('/faqs', function() {
+        return view('faqs.faqs');})->name('faqs');
+});
 
 Route::middleware(['auth'])->group(function() {
     // Checkout
