@@ -46,8 +46,8 @@
 </div>
 @endsection
 
-<script defer>
-window.onload = () => {
+<script>
+document.addEventListener('DOMContentLoaded', () => { 
     const uploadButton = document.getElementById("choose_file_button")
     const formFile = document.getElementById("image_file_upload")
     const fileName = document.getElementById("image_file_name")
@@ -60,7 +60,7 @@ window.onload = () => {
     formFile.addEventListener("change", () => {
         fileName.value = formFile.files[0].name
     })
-}
+})
 
 function openUpload() {
     const fileUpload = document.getElementById("image_file_upload")

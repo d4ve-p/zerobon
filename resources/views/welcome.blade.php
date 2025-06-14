@@ -8,10 +8,10 @@
         <div class="flex flex-col items-center">
             <p class="font-bold text-[70px] text-center text-white drop-shadow-lg">"Zero Carbon, Everlasting Impact</p>
             <p class="font-bold text-[70px] text-center text-white drop-shadow-lg">- Welcome to Zerobon!"</p>
-            <div class="flex px-8 py-3 w-[822px] items-center justify-center bg-white rounded-[100px]">
+            {{-- <div class="flex px-8 py-3 w-[822px] items-center justify-center bg-white rounded-[100px]">
                 <input type="text" class="h-full text-[18px] flex-1 outline-none" placeholder="Search here"/>
                 <i class="fa-solid fa-magnifying-glass text-[25px]"></i>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
@@ -38,7 +38,7 @@
         <p class="font-semibold text-[44px]">Calculate Your Carbon Footprint</p>
         <p class="text-[27px]">Discover the impact of your daily activities on the environment! Our user-friendly Carbon Footprint Calculator helps you estimate your annual emissions in tons of CO2. Simply select and input your data, and get instant results with personalized tips for a greener lifestyle.</p>
         <p class="text-[27px]">Take the first step towards sustainability.</p>
-        <i><button class="hover:cursor-pointer border-2 border-[var(--color-green-700)] bg-white rounded-2xl text-[var(--color-green-700)] w-[386px] h-[60px] text-[20px] font-extrabold">Start Calculating Now</button></i>
+        <a href="{{route("carbon-footprint")}}"><button class="hover:cursor-pointer border-2 border-[var(--color-green-700)] bg-white rounded-2xl text-[var(--color-green-700)] w-[386px] h-[60px] text-[20px] font-extrabold">Start Calculating Now</button></a>
     </div>
     <div class="flex-1/2">
         <img class="w-full" src="{{asset("./home-3.png")}}"/>
@@ -92,7 +92,7 @@
             </div>
         @endforeach
     </div>
-    <a><button class="border-4 border-[var(--color-green-700)] w-[387px] h-[67px] rounded-3xl text-[36px] font-extrabold text-[var(--color-green-700)] bg-white hover:cursor-pointer">Go to EcoMarket</button></a>
+    <a href="{{ route("products") }}"><button class="border-4 border-[var(--color-green-700)] w-[387px] h-[67px] rounded-3xl text-[36px] font-extrabold text-[var(--color-green-700)] bg-white hover:cursor-pointer">Go to EcoMarket</button></a>
 </div>
 </div>
 @endsection 

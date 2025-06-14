@@ -99,7 +99,7 @@
             </div>
             <div class="w-full flex justify-center">
                 <div class="flex flex-col">
-                    {{ $products->links() }}
+                    {{ $products->links('vendor.pagination.tailwind') }}
                 </div>
             </div>
         </div>

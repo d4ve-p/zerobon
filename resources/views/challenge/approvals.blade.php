@@ -10,7 +10,7 @@
     <div class="flex w-full px-[100px] flex-col gap-4">
         <div class="flex w-full justify-end">
             <div class="border-2 border-[var(--color-green-700)] py-1 px-2 text-[var(--color-green-700)] text-[25px] rounded-[10px]">
-                1,500 points
+                {{ Auth::user()->points }} points
             </div>
         </div>
         <table class="w-full text-sm text-center box-border bg-white px-2 py-4">
