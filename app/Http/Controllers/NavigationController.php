@@ -18,4 +18,8 @@ class NavigationController extends Controller
             "products" => $products
         ]);
     }
+
+    function donate(): View {
+        return view('tree-fund.index');
+    }
 }
