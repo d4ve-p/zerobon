@@ -5,15 +5,14 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\DonationController;
+use App\Http\Controllers\NavigationController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [NavigationController::class, 'home'])->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -30,6 +29,10 @@ Route::get('products/edit/{id}', function ($id) {
 Route::get('products/delete/{id}', [ProductController::class, 'delete'])
     ->name('delete-product');
 
+// FAQ
+Route::get('faq', function() { })
+    ->name('faq');
+
 // TODO: Change empty function() into the appropriate function/controller
 
 // Articles
@@ -44,6 +47,12 @@ Route::prefix('green-act')->group(function() {
     Route::get('/', [ActivityController::class, 'index'])->name('social-activities');
     Route::get('/activity-search', [ActivityController::class, 'search'])->name('social-activities.search');
     Route::get('/{id}', [ActivityController::class, 'socialActivityDetail'])->name('social-activities.detail');
+});
+
+// Tree Fund
+Route::prefix('tree-fund')->group(function() {
+    Route::get('/', [NavigationController::class, 'donate'])
+        ->name("tree-fund");
 });
 
 
@@ -143,6 +152,14 @@ Route::middleware(['auth'])->group(function() {
 
         Route::get('/{id}', [ChallengeController::class, "getChallengeDetail"])
             ->name('challenge-detail');
+    });
+
+    //Profile
+    Route::prefix('profile')->group(function() {
+        Route::get('/faqs', function() {
+            return view('faqs.faqs');})->name('faqs');
+        Route::get('/edit', function() {
+            return view('profile.edit-profile');})->name('edit.profile');
     });
 });
 

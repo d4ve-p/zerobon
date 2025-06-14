@@ -40,4 +40,9 @@ class ArticleController extends Controller
         $article = Article::findOrFail($id);
         return view('articles.articles-detail', compact('article'));
     }
+
+    static function getArticlesByCount($count) {
+        $article = Article::all()->take($count);
+        return $article;
+    }
 }
