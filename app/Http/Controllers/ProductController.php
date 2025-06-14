@@ -17,4 +17,10 @@ class ProductController extends Controller
             "products" => Product::paginate(6)
         ]);
     }
+
+    static function getProductsByCount($count) {
+        $products = Product::all()->take(3);
+
+        return $products;
+    }
 }
