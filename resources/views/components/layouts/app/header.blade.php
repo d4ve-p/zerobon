@@ -4,12 +4,12 @@
         <a href="{{route("home")}}" class="hover:cursor-pointer">Home</a>
         <a>Calculator</a>
         <a href="{{route("articles")}}" class="hover:cursor-pointer">News</a>
-        <a>TreeFund</a>
+        <a href="{{ route("tree-fund") }}">TreeFund</a>
         <a href="{{route("products")}}" class="hover:cursor-pointer">EcoMarket</a>
         @auth
         <a href="{{route("challenge")}}" class="hover:cursor-pointer">Challenge</a>
         @endauth
-        <a>GreenAct</a>
+        <a href="{{ route("social-activities") }}" class="hover:cursor-pointer">GreenAct</a>
     </div>
     {{-- @cannot('isLoggedIn')
     <div class="p-1 h-full ">
