@@ -28,6 +28,10 @@ Route::get('products/edit/{id}', function ($id) {
 Route::get('products/delete/{id}', [ProductController::class, 'delete'])
     ->name('delete-product');
 
+// FAQ
+Route::get('faq', function() { })
+    ->name('faq');
+
 // TODO: Change empty function() into the appropriate function/controller
 
 // Articles
@@ -145,6 +149,14 @@ Route::middleware(['auth'])->group(function() {
 
         Route::get('/{id}', [ChallengeController::class, "getChallengeDetail"])
             ->name('challenge-detail');
+    });
+
+    //Profile
+    Route::prefix('profile')->group(function() {
+        Route::get('/faqs', function() {
+            return view('faqs.faqs');})->name('faqs');
+        Route::get('/edit', function() {
+            return view('profile.edit-profile');})->name('edit.profile');
     });
 });
 
