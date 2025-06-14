@@ -20,12 +20,12 @@ return new class extends Migration
             /**
              * Foreign key
              */
-            $table->unsignedBigInteger('authorId');
+            $table->unsignedBigInteger('author_id');
 
             /**
              * ForeignConstraint
              */
-            $table->foreign('authorId')->references('id')->on('users');
+            $table->foreign('author_id')->references('id')->on('users');
         });
     }
 

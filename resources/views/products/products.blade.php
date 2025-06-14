@@ -4,9 +4,10 @@
     {{-- Popup Overlay --}}
     {{-- Popup overlay has the following properties --}}
     {{-- Image, Name, Description, Rating --}}
-    <form id="popup-form" method="GET">
-    <input id="popup-item-id" type="text" class="hidden"/>
-    <div id="popup-overlay" class="w-screen h-screen fixed z-[100] top-0">
+    <form id="popup-form" method="POST" action="{{route('cart.add')}}">
+    @csrf
+    <input id="popup-item-id" name="item_id" type="text" class="hidden"/>
+    <div id="popup-overlay" class="w-screen h-screen fixed z-[100] top-0 hidden">
         {{-- Overlay Background --}}
         <div class="absolute w-full h-full bg-black opacity-25"></div>
         {{-- Content Placeholder --}}
@@ -24,15 +25,13 @@
                 <div class="flex flex-col gap-[20px] flex-1">
                     <h1 id="popup-title" class="text-[29px] font-semibold">Zerobon Totebag</h1>
                     <p id="popup-description" class="text-[15px]">Crafted from 100% organic cotton canvas, this eco-friendly tote is durable, reusable, and free from harmful chemicals—perfect for everyday use and reducing plastic waste.</p>
-                    {{-- Rating --}}
-                    <div>Rating Placeholder</div>
                     {{-- Quantity Selector --}}
                     <div class="flex gap-[20px] items-center">
                         <p class="text-[18px] font-medium">Quantity</p>
                         {{-- Number Selector --}}
                         <div class="w-[165px] h-[44px] border-[var(--color-green-700)] border-2 rounded-[40px] flex justify-between items-center box-border p-[10px]">
                             <i id="popup-substract" class="fa-solid fa-minus w-[17px] h-[17px] text-center hover:cursor-pointer"></i>
-                            <input id="popup-number-input" type="number" class="w-[55px] h-[21px] text-[18px] outline-none border-none text-center" value="1"/>
+                            <input id="popup-number-input" type="number" class="w-[55px] h-[21px] text-[18px] outline-none border-none text-center" name="item_number" value="1"/>
                             <i id="popup-add" class="fa-solid fa-plus w-[17px] h-[17px] text-center hover:cursor-pointer"></i>
                         </div>
                     </div>
@@ -76,20 +75,32 @@
             <div class="h-[65px] w-full"></div>
 
             {{-- Product Showcase --}}
-            <div class="flex-1 w-full flex gap-2 justify-evenly">
+            <div class="flex-1 w-full flex gap-2 justify-evenly flex-wrap">
                 {{--3 items per row--}}
                 {{-- Item Box --}}
+
+                @foreach ($products as $product)
                 <div class="py-[30px] basis-[30%] flex justify-center">
-                <div class="w-[376px] h-[543px] bg-white flex flex-col justify-between items-center py-[30px]">
-                    <div class="flex flex-col items-center">
-                        <img class="w-[232px] h-[277px]" src="{{asset("product-placeholder.png")}}" />
-                        <p class="font-semibold text-[29px]">Product 1</p>
-                        <p class="font-extralight text-[20px]">Rp25.000</p>
+                    <div class="w-[376px] h-[543px] bg-white flex flex-col justify-between items-center py-[30px]">
+                        <div class="flex flex-col items-center">
+                            @if ($product->image_filename === null)
+                                <img class="w-[232px] h-[277px]" src="{{ asset('product-placeholder.png') }}" />
+                            @else
+                                <img class="w-[232px] h-[277px]" src="{{ Storage::disk('product_images')->url($product->image_filename) }}" />
+                            @endif
+                            
+                            <p class="font-semibold text-[29px]">{{ $product->name }}</p>
+                            <p class="font-extralight text-[20px]">Rp{{ $product->price }}</p>
+                        </div>
+                        <button class="bg-[var(--color-green-700)] text-white w-[264px] h-[56px] text-[20px] font-semibold rounded-[20px]" onclick="openPopup({{ $product }})">Add to bag</button>
                     </div>
-                    <button class="bg-[var(--color-green-700)] text-white w-[264px] h-[56px] text-[20px] font-semibold rounded-[20px]">Add to bag</button>
+                    </div>
+                @endforeach
+            </div>
+            <div class="w-full flex justify-center">
+                <div class="flex flex-col">
+                    {{ $products->links() }}
                 </div>
-                </div>
-                
             </div>
         </div>
     </div>
@@ -138,7 +149,11 @@ function openPopup(item) {
     const popupDescription = document.getElementById("popup-description")
 
     popupId.value = item.id
-    popupTitle = item.title
-    popupDescription = item.description
+    console.log(popupId.value)
+    console.log(item.id)
+    popupTitle.innerHTML = item.name
+    popupDescription.innerHTML = item.description
+
+    popupOverlay.classList.remove("hidden")
 }
 </script>

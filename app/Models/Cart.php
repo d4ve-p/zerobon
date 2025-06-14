@@ -15,6 +15,10 @@ class Cart extends Model
      * Get the user the cart belongs to
      * @return BelongsTo<User, Cart>
      */
+    protected $fillable = [
+        "user_id"
+    ];
+
     function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -26,5 +30,17 @@ class Cart extends Model
     function items(): HasMany
     {
         return $this->hasMany(CartItems::class);
+    }
+
+    function calculateTotalPrice()
+    {
+        $total = 0;
+        foreach($this->items()->with('product')->get() as $item) {
+            if($item->product) {
+                $total += $item->quantity * $item->product->price;
+            }
+        }
+
+        return $total;
     }
 }

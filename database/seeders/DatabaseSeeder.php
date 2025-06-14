@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Challenge;
+use App\Models\Product;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Voucher;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +15,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        Product::factory()->count(20)->create();
+        $this->call(
+            ArticleSeeder::class
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        $this->call(
+            ActivitiesSeeder::class
+        );
+        Challenge::factory()->count(10)->create();
+        Voucher::factory()->count(10)->create();
     }
 }

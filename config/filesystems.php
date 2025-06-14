@@ -47,6 +47,30 @@ return [
             'report' => false,
         ],
 
+        'product_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/product_images'),
+            'url' => env('APP_URL').'/storage/product_images',
+            'visibility' => 'public',
+            'throw' => false
+        ],
+
+        'user_challenge_submissions' => [
+            "driver" => "local",
+            "root" => storage_path("app/public/user_challenge_submissions"),
+            "url" => env("APP_URL").'/storage/user_challenge_submissions',
+            'visibility' => 'public',
+            'throw' => false
+        ],
+
+        'voucher_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/voucher_images'),
+            'url' => env('APP_URL').'/storage/voucher_images',
+            'visibility' => 'public',
+            'throw' => false
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

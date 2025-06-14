@@ -26,7 +26,8 @@ class User extends Authenticatable
         'password',
         'address',
         'phone',
-        'role'
+        'role',
+        'points'
     ];
 
     /**
@@ -68,6 +69,17 @@ class User extends Authenticatable
     function purchases(): HasMany
     {
         return $this->hasMany(Purchase::class);
+    }
+
+    // Get User challegne attempts
+    function challenge_attempts(): HasMany
+    {
+        return $this->hasMany(ChallengeAttempt::class);
+    }
+
+    function userVouchers(): HasMany
+    {
+        return $this->hasMany(UserVoucher::class);
     }
 
     /**
