@@ -52,6 +52,11 @@
             <input type="text" class="px-3 py-1 font-semibold text-[20px] outline-none border-2 border-[var(--color-green-700)]" placeholder="Full Name / Company Name"/>
             <input type="email" class="px-3 py-1 font-semibold text-[20px] outline-none border-2 border-[var(--color-green-700)]" placeholder="Email"/>
             <input type="text" class="px-3 py-1 font-semibold text-[20px] outline-none border-2 border-[var(--color-green-700)]" placeholder="Phone Number"/>
+            <div class="flex px-3 py-1 font-semibold text-[20px] border-[var(--color-green-700)] border-2 bg-white w-fit">
+                <input type="text" class="w-[254px] outline-none" value="" id="confirmation-tree-count" disabled />
+                <div class="w-0.5px] h-full bg-black"></div>
+                <div class="px-2 py-1">Tree(s)</div>
+            </div>
         </form>
         <div class="w-[full] h-[15px]"></div>
         <div class="text-center w-[478px] py-2 bg-[var(--color-green-700)] rounded-md text-white font-semibold text-[22px]" onclick="showDonateConfirm()">Pay Now</div>
@@ -71,7 +76,10 @@
 <script>
     function setTreeCount(value) {
         const inputContainer = document.getElementById("tree-count")
+        const confirmationContainer = document.getElementById("confirmation-tree-count")
+
         inputContainer.value = value
+        confirmationContainer.value = value
     }
 
     function showDonateDetails() {
