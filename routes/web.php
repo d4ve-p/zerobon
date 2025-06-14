@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ChallengeController;
@@ -41,10 +42,11 @@ Route::prefix('articles')->group(function() {
     Route::get('/{id}', [ArticleController::class, 'articleDetail'])->name('articles.detail');
 });
 
-// Social Activities
-Route::prefix('social-activities')->group(function() {
-    Route::get('/', function() { })
-        ->name('social-activities');
+// Green Act
+Route::prefix('green-act')->group(function() {
+    Route::get('/', [ActivityController::class, 'index'])->name('social-activities');
+    Route::get('/activity-search', [ActivityController::class, 'search'])->name('social-activities.search');
+    Route::get('/{id}', [ActivityController::class, 'socialActivityDetail'])->name('social-activities.detail');
 });
 
 // Tree Fund
