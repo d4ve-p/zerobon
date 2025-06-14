@@ -47,6 +47,11 @@ Route::prefix('social-activities')->group(function() {
         ->name('social-activities');
 });
 
+// Tree Fund
+Route::prefix('tree-fund')->group(function() {
+    Route::get('/', [NavigationController::class, 'donate']);
+});
+
 
 
 Route::middleware(['auth'])->group(function() {
