@@ -28,6 +28,10 @@ Route::get('products/edit/{id}', function ($id) {
 Route::get('products/delete/{id}', [ProductController::class, 'delete'])
     ->name('delete-product');
 
+// FAQ
+Route::get('faq', function() { })
+    ->name('faq');
+
 // TODO: Change empty function() into the appropriate function/controller
 
 // Articles
