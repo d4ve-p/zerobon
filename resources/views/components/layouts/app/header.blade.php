@@ -2,7 +2,7 @@
     <img src="{{ asset('logo.png') }}" />
     <div class="flex items-center font-poppins text-[var(--color-green-700)] font-extrabold justify-center gap-[20px]">
         <a href="{{route("home")}}" class="hover:cursor-pointer">Home</a>
-        <a>Calculator</a>
+        <a href="{{route("carbon-footpring")}}">Calculator</a>
         <a href="{{route("articles")}}" class="hover:cursor-pointer">News</a>
         <a href="{{ route("tree-fund") }}">TreeFund</a>
         <a href="{{route("products")}}" class="hover:cursor-pointer">EcoMarket</a>
