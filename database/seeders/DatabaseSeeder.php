@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory()->count(20)->create();
+        //Product::factory()->count(20)->create();
         $this->call(
             ArticleSeeder::class
         );
@@ -26,6 +26,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call(
             ChallengeSeeder::class
+        );
+
+        
+        $this->call(
+            ProductSeeder::class
         );
         //Challenge::factory()->count(10)->create();
         Voucher::factory()->count(10)->create();
