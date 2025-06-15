@@ -18,42 +18,35 @@ class ChallengeSeeder extends Seeder
         $challenge =[
           [
             "name" => "Go to TreeFund and Donate Tree",
-            "description" => $faker->text(),
-            "point_reward" => $faker->numberBetween(10, 50),
-            "start_date" => $faker->dateTimeBetween("now", "+1days"),
+            "description" => $faker->text(1000),
+            "point_reward" => "15",
+            "start_date" => $faker->dateTimeBetween("now"),
             "end_date" => $faker->dateTimeBetween("+10days", "+30days")
           ],  
-                    [
+        [
             "name" => "Join the #ReduceCarbonChallenge on IG Story",
-            "description" => $faker->text(),
+            "description" => $faker->text(1000),
             "point_reward" => $faker->numberBetween(10, 50),
-            "start_date" => $faker->dateTimeBetween("now", "+2days"),
+            "start_date" => $faker->dateTimeBetween("now"),
             "end_date" => $faker->dateTimeBetween("+10days", "+30days")
           ],  
           [
             "name" => "Using Public Transportation ",
-            "description" => $faker->text(),
+            "description" => $faker->text(1000),
             "point_reward" => $faker->numberBetween(10, 50),
             "start_date" => $faker->dateTimeBetween("now", "+1days"),
             "end_date" => $faker->dateTimeBetween("+10days", "+30days")
-          ],  
-          [
-            "name" => "Go to TreeFund and Donate Tree",
-            "description" => $faker->text(),
-            "point_reward" => $faker->numberBetween(10, 50),
-            "start_date" => $faker->dateTimeBetween("now", "+2days"),
-            "end_date" => $faker->dateTimeBetween("+10days", "+30days")
-          ],  
+          ],   
           [
             "name" => "Join Car-Free Day",
-            "description" => $faker->text(),
+            "description" => $faker->text(1000),
             "point_reward" => $faker->numberBetween(10, 50),
             "start_date" => $faker->dateTimeBetween("now", "+2days"),
             "end_date" => $faker->dateTimeBetween("+10days", "+30days")
           ],
           [
             "name" => "Use a Reusable Water Bottle",
-            "description" => $faker->text(),
+            "description" => $faker->text(1000),
             "point_reward" => $faker->numberBetween(10, 50),
             "start_date" => $faker->dateTimeBetween("now", "+1days"),
             "end_date" => $faker->dateTimeBetween("+10days", "+30days")
