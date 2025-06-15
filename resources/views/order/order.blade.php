@@ -3,7 +3,7 @@
 @section('content')
 <div class="flex flex-1 bg-[var(--color-cream-500)] flex-col w-full px-[30px] box-border">
     <div class="flex justify-center py-[50px] relative">
-        <button class="absolute left-0 text-[var(--color-green-700)] text-[20px] font-semibold">< Back to EcoMarket</button>
+        <a href="{{route("products")}}"><button class="absolute left-0 text-[var(--color-green-700)] text-[20px] font-semibold hover:cursor-pointer">< Back to EcoMarket</button></a>
         <p class="font-semibold text-[30px]">Check Order Status</p>
         <div></div>
     </div>
