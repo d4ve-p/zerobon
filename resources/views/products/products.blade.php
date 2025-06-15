@@ -118,7 +118,7 @@
 </style>
 
 <script defer>
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function() {
     // Form elements
     const popupOverlay = document.getElementById("popup-overlay")
     const popupFormNumberInput = document.getElementById("popup-number-input")
@@ -139,7 +139,7 @@ window.onload = function() {
         popupOverlay.classList.add('hidden')
     } )
 
-}
+}) 
 
 function openPopup(item) {
     // Elements
@@ -149,8 +149,6 @@ function openPopup(item) {
     const popupDescription = document.getElementById("popup-description")
 
     popupId.value = item.id
-    console.log(popupId.value)
-    console.log(item.id)
     popupTitle.innerHTML = item.name
     popupDescription.innerHTML = item.description
 
