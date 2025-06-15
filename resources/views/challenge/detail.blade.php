@@ -13,7 +13,7 @@
     </div>
         <div class="flex flex-col p-8 bg-white rounded-2xl border-2 border-[var(--color-green-700)] w-[1111px] h-[617px] box-border overflow-y-scroll gap-5">
             <p class="font-semibold text-[30px]">Challenge Description: </p>
-            <p class="font-medium text-[25px] text-[var(--color-green-700)]">{!! nl2br(e($challenge->description)) !!}</p>
+            <p class="font-medium text-[25px] text-[var(--color-green-700)] text-justify">{!! nl2br(e($challenge->description)) !!}</p>
 
         </div>
         <a class="text-white w-[367px] h-[69px] bg-[var(--color-green-700)] font-semibold text-[24px] rounded-2xl text-center flex items-center justify-center mb-10" href="{{route("start-challenge", $challenge->id)}}">Start Challenge</a>
