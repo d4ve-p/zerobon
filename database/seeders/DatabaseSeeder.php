@@ -23,7 +23,11 @@ class DatabaseSeeder extends Seeder
         $this->call(
             ActivitiesSeeder::class
         );
-        Challenge::factory()->count(10)->create();
+
+        $this->call(
+            ChallengeSeeder::class
+        );
+        //Challenge::factory()->count(10)->create();
         Voucher::factory()->count(10)->create();
     }
 }

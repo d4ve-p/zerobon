@@ -11,9 +11,9 @@
         <div class="flex flex-col gap-7">
             @foreach ($challenges as $challenge)
             <div class="flex flex-col">
-                <div class="bg-white border-[var(--color-green-500)] rounded-[15px] drop-shadow-lg border-2 flex w-full justify-between min-h-[96px] items-center text-[var(--color-green-700)] px-8 box-border">
+                <div class="bg-white border-[var(--color-green-500)] rounded-[15px] drop-shadow-lg border-2 flex w-full justify-between min-h-[96px] items-center text-[var(--color-green-700)] px-8 box-border mb-5">
                     <p class="text-[25px] font-semibold ">
-                        {{ $challenge->description}}
+                        {{ $challenge->name}}
                     </p>
                     <div class="flex items-center gap-2">
                         <p class="font-bold text-[20px] text-nowrap">[+15 points ]</p>
