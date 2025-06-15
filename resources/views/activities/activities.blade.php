@@ -17,7 +17,7 @@
     <div class="max-w-4xl mx-auto mt-10 mb-8 px-4">
         <form action="{{ route('social-activities.search') }}" method="GET" class="relative bg-white rounded-full shadow border border-gray-300">
             <input type="text" name="search" placeholder="Search social activities..." value="{{ request('search') }}" class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500">
-            <button class="absolute right-4 top-2 text-green-500"><i class="fas fa-search" type="submit"></i></button>
+            <button class="absolute right-4 top-2 text-green-700"><i class="fas fa-search" type="submit"></i></button>
         </form>
     </div>
 
