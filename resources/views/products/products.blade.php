@@ -51,10 +51,10 @@
 
         {{-- Banner --}}
     <div class="w-full flex box-border p-10 pl-[100px] h-[592px]">
-        <img src="{{ asset('eco-market.png') }}" width="1000px"/>
+        <img src="{{ asset('eco-market.png') }}" width="900px"/>
         <div class="flex h-full flex-1 w-full relative">
             <div class="flex items-center justify-center flex-col h-full absolute left-[-50%] top-[50%] translate-y-[-50%]">
-                <p class="text-[60px] text-[var(--color-green-700)]">Let's Shop At EcoMarket!</p>
+                <p class="text-[60px] text-[var(--color-green-700)] font-bold mb-10">Let's Shop At EcoMarket!</p>
                 <button class="w-[539px] h-[47px] text-white bg-[var(--color-green-700)] rounded-[30px] font-bold">Check Order Status</button>
             </div>
         </div>
