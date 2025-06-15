@@ -6,7 +6,7 @@
     <div class="max-w-4xl mx-auto">
           <div class="mb-4">
             <a href="{{ route('articles') }}" class="inline-block text-green-600 hover:text-green-800 font-semibold">
-                <i class="fas fa-arrow-left mr-2"></i> Back to news
+                < Back to news
             </a>
         </div>
     <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
