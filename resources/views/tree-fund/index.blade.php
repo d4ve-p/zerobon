@@ -64,7 +64,11 @@
         </form>
         <p class="font-bold text-[20px]">Payment Details</p>
 
-        <div class="w-[full] h-[15px]"></div>
+        <div class="w-full flex gap-3 px-2 py-1 bg-white border-2 border-black">
+            <img src="{{asset("logo_bca.png")}}" class="w-[60px]" />
+            <p class="text-[20px]">BCA Virtual Account</p>
+        </div>
+        <div class="w-full h-[15px]"></div>
         <div class="text-center w-[478px] py-2 bg-[var(--color-green-700)] rounded-md text-white font-semibold text-[22px]" onclick="showDonateConfirm()">Pay Now</div>
     </div>
 
