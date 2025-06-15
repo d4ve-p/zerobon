@@ -27,9 +27,9 @@
     <div class="w-full flex gap-10 flex-wrap justify-center gap-y-4" id="voucher-list">
         <form>@csrf</form>
         @foreach($vouchers as $voucher)
-        <div class=" py-6 px-6 flex flex-col justify-between items-center w-[396px] h-[396px] bg-white rounded-xl drop-shadow-lg">
-            <div class="bg-black w-[358px] h-[220px]"></div>
-            <p class="font-semibold text-[22px]">{{ $voucher->name }} Worth Rp{{ $voucher->amount }}</p>
+        <div class=" py-6 px-6 flex flex-col justify-between items-center w-[396px] h-[396px] bg-white rounded-xl drop-shadow-lg mt-5 mb-5">
+            <img src="{{ asset($voucher->image_path) }}" class="w-full h-48 object-cover">
+            <p class="font-semibold text-[22px]">{{ $voucher->name }}</p>
             <div class="flex justify-between items-center w-full">
                 <p class="text-[15px] text-gray-400">{{ $voucher->point_price }} Points</p>
                 <div class="bg-[var(--color-green-700)] text-white text-center py-2 px-10 rounded-3xl font-semibold text-[20px]" onclick="handleRedeem({{ Auth::user()->points }}, {{ $voucher->id }}, {{ $voucher->point_price }})">Redeem</div>

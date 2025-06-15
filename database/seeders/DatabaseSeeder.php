@@ -28,11 +28,14 @@ class DatabaseSeeder extends Seeder
             ChallengeSeeder::class
         );
 
-        
         $this->call(
             ProductSeeder::class
         );
+ 
+        $this->call(
+            VoucherSeeder::class
+        );
         //Challenge::factory()->count(10)->create();
-        Voucher::factory()->count(10)->create();
+        //Voucher::factory()->count(10)->create();
     }
 }
