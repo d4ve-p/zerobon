@@ -72,8 +72,8 @@
     <div class="w-fit h-fit relative">
         <img class="w-auto h-auto max-w-full max-h-[80vh]" src="{{ asset("./home-5.png") }}" />
         <div class="flex flex-col justify-center items-center px-[40px] absolute top-[50%] left-[50%] translate-[-50%] text-center gap-7">
-            <p class="font-bold text-[70px] text-white drop-shadow-2xl">Support a Greener Future</p>
-            <p class="font-bold text-[36px] text-white drop-shadow-2xl">Your donation can make a big impact. By planting a tree, you help combat climate change, enhance biodiversity, and improve air quality.</p>
+            <p class="font-bold text-[clamp(35px,2.5vw,70px)] text-white drop-shadow-2xl">Support a Greener Future</p>
+            <p class="font-bold text-[clamp(18px,1.7vw,36px)] text-white drop-shadow-2xl">Your donation can make a big impact. By planting a tree, you help combat climate change, enhance biodiversity, and improve air quality.</p>
             <a>
                 <button class="w-[387px] h-[67px] bg-white border-4 border-[var(--color-green-700)] rounded-[40px] text-[var(--color-green-700)] font-extrabold text-[32px]">Donate Now</button>
             </a>
@@ -86,7 +86,7 @@
     <div class="flex gap-4 flex-wrap">
         @foreach ($products as $product)
             <div class="flex flex-col h-[450px] px-10 py-3 items-center">
-                <img class="w-[232px] h-[277px]" src="{{ Storage::disk('product_images')->url($product->image_filename) }}"/>
+                <img class="w-[232px] h-[277px]" src="{{ asset($product->image_filename) }}"/>
                 <p class="font-semibold text-[29px]">{{ $product->name }}</p>
                 <p class="font-extralight text-[20px]">Rp.{{ $product->price }}</p>
             </div>
