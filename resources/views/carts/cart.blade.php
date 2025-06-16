@@ -17,31 +17,22 @@
         <div class="flex-1 flex flex-col overflow-y-scroll max-h-[380px] py-12 gap-4">
             {{-- TODO: Fetch coupon logic --}}
             {{-- Assign id to label, and input --}}
+            @foreach ($availableVouchers as $userVoucher)
+            @if ($userVoucher->voucher->amount > 0)
             <div class="flex justify-center items-center">
-                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">10%</div>
+                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">{{$userVoucher->voucher->amount/1000}}K</div>
                 <div class="flex justify-between bg-[var(--color-cream-700)] w-[436px] h-[106px] items-center px-5">
-                    <label for="1" class="text-[29px] font-semibold">Discount Voucher</label>
-                    <input type="checkbox" id="1" />
+                    <label for="{{ "user-voucher-".$userVoucher->id }}" class="text-[29px] font-semibold">{{ $userVoucher->voucher->name }}</label>
+                    <input name="user-voucher" type="checkbox"  value="{{$userVoucher->id}}"/>
                 </div>
             </div>
-             <div class="flex justify-center items-center">
-                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">10%</div>
-                <div class="flex justify-between bg-[var(--color-cream-700)] w-[436px] h-[106px] items-center px-5">
-                    <label for="2" class="text-[29px] font-semibold">Discount Voucher</label>
-                    <input type="checkbox" id="2" />
-                </div>
-            </div>
-             <div class="flex justify-center items-center">
-                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">10%</div>
-                <div class="flex justify-between bg-[var(--color-cream-700)] w-[436px] h-[106px] items-center px-5">
-                    <label for="3" class="text-[29px] font-semibold">Discount Voucher</label>
-                    <input type="checkbox" id="3" />
-                </div>
-            </div>
+            @endif
+            @endforeach
+
         </div>
         <div class="w-full flex justify-center">
             {{-- TODO: Apply Voucher Logic --}}
-            <button type="button" id="voucher-apply" class="rounded-[15px] bg-[var(--color-green-700)] text-white text-[24px] w-[259px] h-[69px] hover:cursor-pointer mt-6" onclick="closePopup()">Apply Now</button>
+            <button type="button" id="voucher-apply" class="rounded-[15px] bg-[var(--color-green-700)] text-white text-[24px] w-[259px] h-[69px] hover:cursor-pointer mt-6" onclick="applyVoucher()">Apply Now</button>
         </div>
     </div> 
     </form>
@@ -163,7 +154,7 @@ input[type="checkbox"] {
 <script defer>
 let overlayPopup = null
 
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function() {
     const voucherOpen = document.getElementById("voucher-open")
     const voucherClose = document.getElementById("voucher-close")
     const voucherApply = document.getElementById("voucher-apply")
@@ -181,7 +172,7 @@ window.onload = function() {
     voucherApply.addEventListener('click', () => {
         closePopup()
     })
-}
+})
 
 function openPopup() {
     if(!overlayPopup) return
@@ -254,5 +245,28 @@ function checkOrUncheckAll() {
     for(const box of allBoxes) {
         box.checked = value
     }
+}
+
+function applyVoucher() {
+    closePopup()
+
+    const csrfToken = document.getElementsByName("_token")[0].value
+    const voucherContainers = document.getElementsByName("user-voucher")
+
+    const vouchers = []
+    for(const container of voucherContainers) {
+        if(container.checked) vouchers.push(container.value)
+    }
+
+    fetch("{{ route("cart.apply-voucher") }}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ vouchers: vouchers })
+    }).then(async(res) => { console.log(await res.json()) })
+
 }
 </script>

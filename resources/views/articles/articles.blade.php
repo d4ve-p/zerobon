@@ -69,9 +69,9 @@
     <!-- Sidebar -->
     <aside class="space-y-6">
         <!-- Search Box -->
-        <form action="{{ route('articles.search') }}" method="GET" class="relative">
+        <form action="{{ route('articles.search') }}" method="GET" class="relative bg-white rounded-full shadow border border-gray-300">
             <input type="text" name="search" placeholder="Search articles..." value="{{ request('search') }}" class="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-green-500">
-            <button class="absolute right-4 top-2 text-green-500"><i class="fas fa-search" type="submit"></i></button>
+            <button class="absolute right-4 top-2 text-green-700"><i class="fas fa-search" type="submit"></i></button>
         </form>
 
         <!-- Suggested Articles -->

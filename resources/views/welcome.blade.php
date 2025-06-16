@@ -8,10 +8,10 @@
         <div class="flex flex-col items-center">
             <p class="font-bold text-[70px] text-center text-white drop-shadow-lg">"Zero Carbon, Everlasting Impact</p>
             <p class="font-bold text-[70px] text-center text-white drop-shadow-lg">- Welcome to Zerobon!"</p>
-            <div class="flex px-8 py-3 w-[822px] items-center justify-center bg-white rounded-[100px]">
+            {{-- <div class="flex px-8 py-3 w-[822px] items-center justify-center bg-white rounded-[100px]">
                 <input type="text" class="h-full text-[18px] flex-1 outline-none" placeholder="Search here"/>
                 <i class="fa-solid fa-magnifying-glass text-[25px]"></i>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
@@ -38,7 +38,7 @@
         <p class="font-semibold text-[44px]">Calculate Your Carbon Footprint</p>
         <p class="text-[27px]">Discover the impact of your daily activities on the environment! Our user-friendly Carbon Footprint Calculator helps you estimate your annual emissions in tons of CO2. Simply select and input your data, and get instant results with personalized tips for a greener lifestyle.</p>
         <p class="text-[27px]">Take the first step towards sustainability.</p>
-        <i><button class="hover:cursor-pointer border-2 border-[var(--color-green-700)] bg-white rounded-2xl text-[var(--color-green-700)] w-[386px] h-[60px] text-[20px] font-extrabold">Start Calculating Now</button></i>
+        <a href="{{route("carbon-footprint")}}"><button class="hover:cursor-pointer border-2 border-[var(--color-green-700)] bg-white rounded-2xl text-[var(--color-green-700)] w-[386px] h-[60px] text-[20px] font-extrabold">Start Calculating Now</button></a>
     </div>
     <div class="flex-1/2">
         <img class="w-full" src="{{asset("./home-3.png")}}"/>
@@ -72,8 +72,8 @@
     <div class="w-fit h-fit relative">
         <img class="w-auto h-auto max-w-full max-h-[80vh]" src="{{ asset("./home-5.png") }}" />
         <div class="flex flex-col justify-center items-center px-[40px] absolute top-[50%] left-[50%] translate-[-50%] text-center gap-7">
-            <p class="font-bold text-[70px] text-white drop-shadow-2xl">Support a Greener Future</p>
-            <p class="font-bold text-[36px] text-white drop-shadow-2xl">Your donation can make a big impact. By planting a tree, you help combat climate change, enhance biodiversity, and improve air quality.</p>
+            <p class="font-bold text-[clamp(35px,2.5vw,70px)] text-white drop-shadow-2xl">Support a Greener Future</p>
+            <p class="font-bold text-[clamp(18px,1.7vw,36px)] text-white drop-shadow-2xl">Your donation can make a big impact. By planting a tree, you help combat climate change, enhance biodiversity, and improve air quality.</p>
             <a>
                 <button class="w-[387px] h-[67px] bg-white border-4 border-[var(--color-green-700)] rounded-[40px] text-[var(--color-green-700)] font-extrabold text-[32px]">Donate Now</button>
             </a>
@@ -86,13 +86,13 @@
     <div class="flex gap-4 flex-wrap">
         @foreach ($products as $product)
             <div class="flex flex-col h-[450px] px-10 py-3 items-center">
-                <img class="w-[232px] h-[277px]" src="{{ Storage::disk('product_images')->url($product->image_filename) }}"/>
+                <img class="w-[232px] h-[277px]" src="{{ asset($product->image_filename) }}"/>
                 <p class="font-semibold text-[29px]">{{ $product->name }}</p>
                 <p class="font-extralight text-[20px]">Rp.{{ $product->price }}</p>
             </div>
         @endforeach
     </div>
-    <a><button class="border-4 border-[var(--color-green-700)] w-[387px] h-[67px] rounded-3xl text-[36px] font-extrabold text-[var(--color-green-700)] bg-white hover:cursor-pointer">Go to EcoMarket</button></a>
+    <a href="{{ route("products") }}"><button class="border-4 border-[var(--color-green-700)] w-[387px] h-[67px] rounded-3xl text-[36px] font-extrabold text-[var(--color-green-700)] bg-white hover:cursor-pointer">Go to EcoMarket</button></a>
 </div>
 </div>
 @endsection 

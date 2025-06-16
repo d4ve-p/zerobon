@@ -52,13 +52,23 @@
             <input type="text" class="px-3 py-1 font-semibold text-[20px] outline-none border-2 border-[var(--color-green-700)]" placeholder="Full Name / Company Name"/>
             <input type="email" class="px-3 py-1 font-semibold text-[20px] outline-none border-2 border-[var(--color-green-700)]" placeholder="Email"/>
             <input type="text" class="px-3 py-1 font-semibold text-[20px] outline-none border-2 border-[var(--color-green-700)]" placeholder="Phone Number"/>
-            <div class="flex px-3 py-1 font-semibold text-[20px] border-[var(--color-green-700)] border-2 bg-white w-fit">
-                <input type="text" class="w-[254px] outline-none" value="" id="confirmation-tree-count" disabled />
-                <div class="w-0.5px] h-full bg-black"></div>
-                <div class="px-2 py-1">Tree(s)</div>
+            <div class="gap-2 flex w-full items-center">
+                <div class="flex px-3 py-1 font-semibold text-[20px] border-[var(--color-green-700)] border-2 bg-white w-fit">
+                    <input type="text" class="w-[254px] outline-none" value="" id="confirmation-tree-count" disabled />
+                    <div class="w-0.5px] h-full bg-black"></div>
+                    <div class="px-2 py-1">Tree(s)</div>
+                </div>
+
+                <p class="text-[20px] font-semibold">Rp.<span id="donation-price"></span> + 1.000 admin</p>
             </div>
         </form>
-        <div class="w-[full] h-[15px]"></div>
+        <p class="font-bold text-[20px]">Payment Details</p>
+
+        <div class="w-full flex gap-3 px-2 py-1 bg-white border-2 border-black">
+            <img src="{{asset("logo_bca.png")}}" class="w-[60px]" />
+            <p class="text-[20px]">BCA Virtual Account</p>
+        </div>
+        <div class="w-full h-[15px]"></div>
         <div class="text-center w-[478px] py-2 bg-[var(--color-green-700)] rounded-md text-white font-semibold text-[22px]" onclick="showDonateConfirm()">Pay Now</div>
     </div>
 
@@ -77,9 +87,11 @@
     function setTreeCount(value) {
         const inputContainer = document.getElementById("tree-count")
         const confirmationContainer = document.getElementById("confirmation-tree-count")
+        const priceContainer = document.getElementById("donation-price")
 
         inputContainer.value = value
         confirmationContainer.value = value
+        priceContainer.innerHTML = value * 10000
     }
 
     function showDonateDetails() {

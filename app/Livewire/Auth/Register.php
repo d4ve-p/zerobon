@@ -21,6 +21,13 @@ class Register extends Component
         'confirm' => 'required|min:6|same:password'
     ];
 
+    public function mount(): void
+    {
+        if (request()->query('membership') !== 'true') {
+            $this->redirect(route('membership'), navigate: true);
+        }
+    }
+
     public function register()
     {
         $this->validate();
@@ -35,7 +42,7 @@ class Register extends Component
             'role' => 'member'
         ]);
 
-        return redirect()->route('login');
+        return redirect()->route('verify.payment');
     }
     public function render()
     {

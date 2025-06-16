@@ -32,6 +32,11 @@ class Cart extends Model
         return $this->hasMany(CartItems::class);
     }
 
+    function vouchers(): HasMany
+    {
+        return $this->hasMany(CartUserVouchers::class);
+    }
+
     function calculateTotalPrice()
     {
         $total = 0;

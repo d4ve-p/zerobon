@@ -30,6 +30,7 @@
                 autofocus
                 autocomplete="name"
                 class="flex-1 outline-none text-[18px] font-medium text-gray-600 bg-transparent"
+                value="{{Auth::user()->fullname}}"
                 />
             </div>
         </div>
@@ -49,6 +50,7 @@
                     autocomplete="username"
                     id="username"
                     class="outline-none text-[18px] font-medium"
+                    value="{{Auth::user()->username}}"
                 />
             </div>
             <p class="text-[12px] px-6 w-[508px]">*3–20 characters, letters, numbers, dots, or underscores. Must start with a letter, no spaces or special characters</p>
@@ -68,6 +70,7 @@
                     autocomplete="address"
                     id="address"
                     class="outline-none text-[18px] font-medium flex-1"
+                    value="{{Auth::user()->address}}"
                 />
              </div>
 
@@ -88,6 +91,7 @@
                     autocomplete="phone"
                     id="phone"
                     class="outline-none text-[18px] font-medium flex-1"
+                    value="{{Auth::user()->phone}}"
                 />
          </div>
          </div>
@@ -107,6 +111,7 @@
                     autocomplete="email"
                     id="email"
                     class="outline-none text-[18px] font-medium flex-1"
+                    value="{{Auth::user()->email}}"
                 />
             </div>
          </div>

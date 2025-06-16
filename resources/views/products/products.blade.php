@@ -51,11 +51,11 @@
 
         {{-- Banner --}}
     <div class="w-full flex box-border p-10 pl-[100px] h-[592px]">
-        <img src="{{ asset('eco-market.png') }}" width="1000px"/>
+        <img src="{{ asset('eco-market.png') }}" width="900px"/>
         <div class="flex h-full flex-1 w-full relative">
             <div class="flex items-center justify-center flex-col h-full absolute left-[-50%] top-[50%] translate-y-[-50%]">
-                <p class="text-[60px] text-[var(--color-green-700)]">Let's Shop At EcoMarket!</p>
-                <button class="w-[539px] h-[47px] text-white bg-[var(--color-green-700)] rounded-[30px] font-bold">Check Order Status</button>
+                <p class="text-[60px] text-[var(--color-green-700)] font-bold mb-10">Let's Shop At EcoMarket!</p>
+                <a href="{{route("purchases")}}"><button class="w-[539px] h-[47px] text-white bg-[var(--color-green-700)] rounded-[30px] font-bold hover:cursor-pointer">Check Order Status</button></a>
             </div>
         </div>
     </div>
@@ -66,9 +66,9 @@
         <div class="h-full w-full flex flex-col items-center justify-center box-border py-[35px]">
             @csrf
             <form method="GET">
-                <div class="flex gap-[15px] w-[822px] h-[60px] items-center justify-center box-border border-solid border-2 rounded-[65px] bg-white px-5">
-                    <input type="text" class="flex-1 text-[18px] p-3 outline-none" placeholder="Search our ecoproducts"/>
-                    <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="flex gap-[15px] w-[822px] h-[60px] items-center justify-center box-border shadow border-solid border-2 rounded-[65px] bg-white px-5">
+                    <input type="text" class="flex-1 text-[18px] p-3 outline-none" placeholder="Search our ecoproducts..."/>
+                    <i class="fa-solid fa-magnifying-glass text-green-700"></i>
                 </div>
             </form>
             
@@ -83,12 +83,7 @@
                 <div class="py-[30px] basis-[30%] flex justify-center">
                     <div class="w-[376px] h-[543px] bg-white flex flex-col justify-between items-center py-[30px]">
                         <div class="flex flex-col items-center">
-                            @if ($product->image_filename === null)
-                                <img class="w-[232px] h-[277px]" src="{{ asset('product-placeholder.png') }}" />
-                            @else
-                                <img class="w-[232px] h-[277px]" src="{{ Storage::disk('product_images')->url($product->image_filename) }}" />
-                            @endif
-                            
+                            <img class="w-[232px] h-[277px]" src="{{ asset($product->image_filename) }}" />
                             <p class="font-semibold text-[29px]">{{ $product->name }}</p>
                             <p class="font-extralight text-[20px]">Rp{{ $product->price }}</p>
                         </div>
@@ -99,7 +94,7 @@
             </div>
             <div class="w-full flex justify-center">
                 <div class="flex flex-col">
-                    {{ $products->links() }}
+                    {{ $products->links('vendor.pagination.tailwind') }}
                 </div>
             </div>
         </div>
@@ -118,7 +113,7 @@
 </style>
 
 <script defer>
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function() {
     // Form elements
     const popupOverlay = document.getElementById("popup-overlay")
     const popupFormNumberInput = document.getElementById("popup-number-input")
@@ -139,7 +134,7 @@ window.onload = function() {
         popupOverlay.classList.add('hidden')
     } )
 
-}
+}) 
 
 function openPopup(item) {
     // Elements
@@ -149,8 +144,6 @@ function openPopup(item) {
     const popupDescription = document.getElementById("popup-description")
 
     popupId.value = item.id
-    console.log(popupId.value)
-    console.log(item.id)
     popupTitle.innerHTML = item.name
     popupDescription.innerHTML = item.description
 

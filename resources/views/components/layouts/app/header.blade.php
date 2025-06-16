@@ -1,15 +1,25 @@
 <div class="w-full h-[90px] py-3 flex justify-between box-border relative px-5">
     <img src="{{ asset('logo.png') }}" />
-    <div class="flex items-center font-poppins text-[var(--color-green-700)] font-extrabold justify-center gap-[20px]">
-        <a href="{{route("home")}}" class="hover:cursor-pointer">Home</a>
-        <a href="{{route("carbon-footprint")}}">Calculator</a>
-        <a href="{{route("articles")}}" class="hover:cursor-pointer">News</a>
-        <a href="{{ route("tree-fund") }}">TreeFund</a>
-        <a href="{{route("products")}}" class="hover:cursor-pointer">EcoMarket</a>
+    <div class="flex items-center font-poppins text-[var(--color-green-700)] font-extrabold justify-center gap-[50px] text-[20px] absolute left-[50%] top-[50%] translate-[-50%]">
+        <a  href="{{route("home")}}" 
+            class="hover:cursor-pointer {{ request()->routeIs("home") ? 'underline font-bold' : "" }} ">
+            Home</a>
+        <a  href="{{route("carbon-footprint")}}"
+            class="hover:cursor-pointer {{ request()->routeIs("carbon-footprint") ? 'underline font-bold' : "" }} "
+        >Calculator</a>
+        <a  href="{{route("articles")}}" 
+            class="hover:cursor-pointer {{ request()->routeIs("articles") ? 'underline font-bold' : "" }} ">News</a>
+        <a  href="{{ route("tree-fund") }}"
+            class="hover:cursor-pointer {{ request()->routeIs("tree-fund") ? 'underline font-bold' : "" }} ">TreeFund</a>
         @auth
-            <a href="{{route("challenge")}}" class="hover:cursor-pointer">Challenge</a>
+            <a  href="{{route("products")}}" 
+                class="hover:cursor-pointer {{ request()->routeIs("products") ? 'underline font-bold' : "" }} ">EcoMarket</a>
+            <a  href="{{route("challenge")}}" 
+                class="hover:cursor-pointer {{ request()->routeIs("challenge") ? 'underline font-bold' : "" }} ">Challenge</a>
+            <a href="{{ route("social-activities") }}" 
+            class="hover:cursor-pointer {{ request()->routeIs("social-activities") ? 'underline font-bold' : "" }} ">GreenAct</a>
         @endauth
-        <a href="{{ route("social-activities") }}" class="hover:cursor-pointer">GreenAct</a>
+        
     </div>
     {{-- @cannot('isLoggedIn')
     <div class="p-1 h-full ">
@@ -18,9 +28,8 @@
     @elsecan("isLoggedIn") --}}
     <div class="flex justify-center items-center gap-[40px]">
         @auth
-            <a class="hover:cursor-pointer"><i class="fa-solid fa-cart-shopping fa-2x" style='color: brown'></i></a>
+            <a class="hover:cursor-pointer" href="{{ route("carts") }}"><i class="fa-solid fa-cart-shopping fa-2x text-[var(--color-green-700)]"></i></a>
         @endauth
-        <i class="fa-solid fa-bell fa-2x hover:cursor-pointer" style='color: green'></i>
         <div class="relative">
             <i class="fa-solid fa-user fa-2x hover:cursor-pointer" id="profile" style='color: green'></i>
             <div class="absolute top-[110%] right-[0] z-[1000]">

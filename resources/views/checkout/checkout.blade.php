@@ -14,10 +14,10 @@
                 <p class="font-medium text-[20px] mb-0.5">Delivery Address</p>
                 <div class="flex flex-col border-[var(--color-green-700)] border-2 w-full rounded-[15px] px-2 py-4">
                     {{-- TODO: Fill in with appropriate use detail --}}
-                    <p class="font-medium text-[20px]">Katherine - 08124567890</p>
-                    <p class="text-[15px]">Jl. Merdeka No. 35, RT.4/RW.5, Kelurahan Merdeka, Kecamatan Tanah Abang, Jakarta Pusat, DKI Jakarta 10110</p>
+                    <p class="font-medium text-[20px]">{{ Auth::user()->fullname }} - {{ Auth::user()->phone }}</p>
+                    <p class="text-[15px]"> {{ Auth::user()->address }}</p>
                 </div>
-                <button class="bg-[var(--color-green-700)] text-white font-semibold text-[18px] w-[172px] h-[38px] rounded-[15px] hover:cursor-pointer">Edit Address</button>
+                <a href="{{route("edit.profile")}}"><button class="bg-[var(--color-green-700)] text-white font-semibold text-[18px] w-[172px] h-[38px] rounded-[15px] hover:cursor-pointer">Edit Address</button></a>
             </div>
                 <div class="bg-white rounded-[15px] flex flex-col shadow-2xl drop-shadow-2xl px-6 py-6 box-border gap-4">
                 <p class="font-medium text-[20px] mb-0.5">Delivery Details</p>
@@ -70,12 +70,12 @@
             <div class="flex w-full text-[18px]">
                 <p class="w-[244px]">Voucher Applied</p>
                 <p>-</p>
-                <p>Rp0</p>
+                <p>Rp{{ $total_voucher }}</p>
             </div>
             <hr class="border-[2px] rounded-[5px] border-black"/>
             <div class="flex w-full font-semibold text-[22px]">
                 <p class="w-[244px]">Total</p>
-                <p>Rp. {{ $cart["subtotal"] + 9000 + 1000 }}</p>
+                <p>Rp. {{ $cart["subtotal"] + 9000 + 1000 - $total_voucher }}</p>
             </div>
             <div class="flex w- items-center justify-center hover:cursor-pointer">
                 <form method="POST" action="{{ route("checkout") }}">
@@ -92,7 +92,7 @@
     <div class="w-[772px] px-8 py-4 box-border bg-white flex flex-col gap-[20px] h-[403px] rounded-[15px]">
         <div class="p-4 flex justify-between w-full border-[var(--color-green-700)] border-2 rounded-[15px]">
             <p class="text-[20px]">Complete Your Payment Before</p>
-            <p class="text-[20px] text-[var(--color-green-700)]">14 May 2025, 15.24 WIB</p>
+            <p class="text-[20px] text-[var(--color-green-700)]">{{  \Carbon\Carbon::now('Asia/Jakarta')->addMinutes(10)->format('d F Y, H.i T') }}</p>
         </div>
         <div class="flex text-[20px] px-8">
             <p class="font-semibold w-[480px] ">Order Number</p>

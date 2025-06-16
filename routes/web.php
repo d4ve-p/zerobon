@@ -18,20 +18,9 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-// Products
-Route::get('products', [ProductController::class, 'products'])
-    ->name('products');
-Route::view('products/create', 'products.create-product')
-    ->name('create-product');
-Route::get('products/edit/{id}', function ($id) {
-        return view('products.edit-product', ['productId' => $id]);
-    })->name('edit-product');
-Route::get('products/delete/{id}', [ProductController::class, 'delete'])
-    ->name('delete-product');
-
 // FAQ
-Route::get('faq', function() { })
-    ->name('faq');
+Route::get('/faq', function() {
+    return view('faqs.faqs');})->name('faq');
 
 // TODO: Change empty function() into the appropriate function/controller
 
@@ -71,7 +60,25 @@ Route::prefix('membership')->group(function () {
     })->name('membership.success');
 });
 
+// Carbon Footprint
+Route::prefix('carbon-footprints')->group(function() {
+    Route::get('/', function() {
+        return view('calculator.calculator');
+    })->name('carbon-footprint');
+});
+
 Route::middleware(['auth'])->group(function() {
+    // Products
+    Route::get('products', [ProductController::class, 'products'])
+        ->name('products');
+    Route::view('products/create', 'products.create-product')
+        ->name('create-product');
+    Route::get('products/edit/{id}', function ($id) {
+            return view('products.edit-product', ['productId' => $id]);
+        })->name('edit-product');
+    Route::get('products/delete/{id}', [ProductController::class, 'delete'])
+        ->name('delete-product');
+
     // Checkout
     Route::prefix('checkout')->group(function() {
         Route::get('/', [CartController::class, 'checkOutPage'])
@@ -98,6 +105,9 @@ Route::middleware(['auth'])->group(function() {
 
         Route::post('/update', [CartController::class, 'editCartItem'])
         ->name('cart.update');
+
+        Route::post('/apply-voucher', [CartController::class, 'applyVoucher'])
+        ->name('cart.apply-voucher');
     });
 
     // Purchases
@@ -128,13 +138,6 @@ Route::middleware(['auth'])->group(function() {
             ->name('voucher-redeem-post');
         Route::post('/use', function() { })
             ->name('vouchers-use-post');
-    });
-
-    // Carbon Footprint
-    Route::prefix('carbon-footprints')->group(function() {
-        Route::get('/', function() {
-            return view('calculator.calculator');
-        })->name('carbon-footprint');
     });
 
     // Donation
@@ -171,8 +174,6 @@ Route::middleware(['auth'])->group(function() {
 
     //Profile
     Route::prefix('profile')->group(function() {
-        Route::get('/faqs', function() {
-            return view('faqs.faqs');})->name('faqs');
         Route::get('/edit', function() {
             return view('profile.edit-profile');})->name('edit.profile');
     });

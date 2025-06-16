@@ -4,7 +4,7 @@
 <div class="min-h-screen bg-[#FFF8E8]">
     <div class="max-w-5xl mx-auto px-4 py-8 bg-[#fef8e9] min-h-screen">
         <a href="{{ route('social-activities') }}" class="text-green-600 flex font-semibold items-center mb-4">
-            <i class="fas fa-arrow-left mr-2"></i> Back to Social Activities
+            < Back to Social Activities
         </a>
 
         <h1 class="text-3xl md:text-3xl font-bold text-green-700 mb-5 text-center">{{ $activity->title }}</h1>

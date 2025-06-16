@@ -19,7 +19,7 @@
         <!-- Payment Countdown -->
         <div class="border border-green-500 bg-green-50 rounded-lg px-4 py-2 flex justify-between text-sm font-medium text-green-700">
             <span>Complete Your Payment In</span>
-            <span>14 May 2025, 15.24 WIB</span>
+            <span>{{ \Carbon\Carbon::now('Asia/Jakarta')->addMinutes(10)->format('d F Y, H.i T') }}</span>
         </div>
 
         <!-- Payment Details -->
