@@ -17,27 +17,18 @@
         <div class="flex-1 flex flex-col overflow-y-scroll max-h-[380px] py-12 gap-4">
             {{-- TODO: Fetch coupon logic --}}
             {{-- Assign id to label, and input --}}
+            @foreach ($vouchers as $userVoucher)
+            @if ($userVoucher->voucher->amount > 0)
             <div class="flex justify-center items-center">
-                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">10%</div>
+                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">{{$userVoucher->voucher->amount/1000}}K</div>
                 <div class="flex justify-between bg-[var(--color-cream-700)] w-[436px] h-[106px] items-center px-5">
                     <label for="1" class="text-[29px] font-semibold">Discount Voucher</label>
                     <input type="checkbox" id="1" />
                 </div>
             </div>
-             <div class="flex justify-center items-center">
-                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">10%</div>
-                <div class="flex justify-between bg-[var(--color-cream-700)] w-[436px] h-[106px] items-center px-5">
-                    <label for="2" class="text-[29px] font-semibold">Discount Voucher</label>
-                    <input type="checkbox" id="2" />
-                </div>
-            </div>
-             <div class="flex justify-center items-center">
-                <div class="bg-[var(--color-green-700)] w-[141px] h-[106px] text-white text-[29px] font-semibold flex justify-center items-center">10%</div>
-                <div class="flex justify-between bg-[var(--color-cream-700)] w-[436px] h-[106px] items-center px-5">
-                    <label for="3" class="text-[29px] font-semibold">Discount Voucher</label>
-                    <input type="checkbox" id="3" />
-                </div>
-            </div>
+            @endif
+            @endforeach
+
         </div>
         <div class="w-full flex justify-center">
             {{-- TODO: Apply Voucher Logic --}}
@@ -163,7 +154,7 @@ input[type="checkbox"] {
 <script defer>
 let overlayPopup = null
 
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function() {
     const voucherOpen = document.getElementById("voucher-open")
     const voucherClose = document.getElementById("voucher-close")
     const voucherApply = document.getElementById("voucher-apply")
@@ -181,7 +172,7 @@ window.onload = function() {
     voucherApply.addEventListener('click', () => {
         closePopup()
     })
-}
+})
 
 function openPopup() {
     if(!overlayPopup) return

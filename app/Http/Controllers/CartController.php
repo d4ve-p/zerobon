@@ -53,10 +53,12 @@ class CartController extends Controller
         );
 
         $cart_items = $cart->items;
+        $vouchers = Auth::user()->userVouchers;
 
         return [
             'items' => $cart_items,
-            'subtotal' => $cart->calculateTotalPrice()
+            'subtotal' => $cart->calculateTotalPrice(),
+            'vouchers' => $vouchers
         ];
     }
 

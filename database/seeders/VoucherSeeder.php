@@ -36,19 +36,19 @@ class VoucherSeeder extends Seeder
             ],
             [
                 "name" => "Get Free Delivery at EcoMarket",
-                "amount" => "100",
+                "amount" => "9000",
                 "point_price" => "3750",
                 "image_path" => "voucher_img\pic3.jpeg"
             ],
             [
-                "name" => "25% Discount at EcoMarket",
-                "amount" => "25",
+                "name" => "25K Discount at EcoMarket",
+                "amount" => "25000",
                 "point_price" => "2250",
                 "image_path" => "voucher_img\pic4.jpeg"
             ],
             [
-                "name" => "10% Discount at EcoMarket",
-                "amount" => "10",
+                "name" => "10K Discount at EcoMarket",
+                "amount" => "10000",
                 "point_price" => "1500",
                 "image_path" => "voucher_img\pic4.jpeg"
             ]
