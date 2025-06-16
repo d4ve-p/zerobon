@@ -70,12 +70,12 @@
             <div class="flex w-full text-[18px]">
                 <p class="w-[244px]">Voucher Applied</p>
                 <p>-</p>
-                <p>Rp0</p>
+                <p>Rp{{ $total_voucher }}</p>
             </div>
             <hr class="border-[2px] rounded-[5px] border-black"/>
             <div class="flex w-full font-semibold text-[22px]">
                 <p class="w-[244px]">Total</p>
-                <p>Rp. {{ $cart["subtotal"] + 9000 + 1000 }}</p>
+                <p>Rp. {{ $cart["subtotal"] + 9000 + 1000 - $total_voucher }}</p>
             </div>
             <div class="flex w- items-center justify-center hover:cursor-pointer">
                 <form method="POST" action="{{ route("checkout") }}">

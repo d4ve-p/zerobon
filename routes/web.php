@@ -105,6 +105,9 @@ Route::middleware(['auth'])->group(function() {
 
         Route::post('/update', [CartController::class, 'editCartItem'])
         ->name('cart.update');
+
+        Route::post('/apply-voucher', [CartController::class, 'applyVoucher'])
+        ->name('cart.apply-voucher');
     });
 
     // Purchases

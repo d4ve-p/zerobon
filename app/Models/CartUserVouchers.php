@@ -18,6 +18,6 @@ class CartUserVouchers extends Model
     } 
 
     public function user_voucher(): BelongsTo {
-        return $this->belongsTo(Voucher::class);
+        return $this->belongsTo(UserVoucher::class);
     }
 }

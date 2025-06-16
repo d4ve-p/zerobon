@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('cart_user_vouchers', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            
+            $table->unsignedBigInteger("user_voucher_id");
+            $table->unsignedBigInteger("cart_id");
+
+            $table->foreign("user_voucher_id")->references("id")->on("user_vouchers");
+            $table->foreign('cart_id')->references('id')->on('carts');
         });
     }
 

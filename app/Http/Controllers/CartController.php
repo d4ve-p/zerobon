@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\CartUserVouchers;
 use App\Models\PendingPurchase;
 use App\Models\PendingPurchaseItem;
 use App\Models\Product;
@@ -47,18 +48,44 @@ class CartController extends Controller
         return redirect(route("products"));
     }
 
+    function applyVoucher(Request $request): JsonResponse {
+        $user = Auth::user();
+
+        $vouchers = $request->input("vouchers");
+
+        CartUserVouchers::where("cart_id", $user->cart->id)->delete();
+
+        $newVouchers = [];
+        foreach($vouchers as $voucher) {
+            $userVoucher = CartUserVouchers::create([
+                "cart_id" => $user->cart->id,
+                "user_voucher_id" => $voucher
+            ]);
+            
+            array_push($newVouchers, $userVoucher);
+        }
+
+        
+        DB::commit();
+
+        return response()->json(['vouchers' => $newVouchers]);
+    }
+
+
     private function getCart(): array {
         $cart = Cart::firstOrCreate(
             ['user_id' => Auth::user()->id]
         );
 
         $cart_items = $cart->items;
-        $vouchers = Auth::user()->userVouchers;
+        $vouchers = $cart->vouchers;
+        $availableVouchers = Auth::user()->userVouchers;
 
         return [
             'items' => $cart_items,
             'subtotal' => $cart->calculateTotalPrice(),
-            'vouchers' => $vouchers
+            'cart_user_vouchers' => $vouchers,
+            'availableVouchers' => $availableVouchers
         ];
     }
 
@@ -70,6 +97,11 @@ class CartController extends Controller
         $user = Auth::user();
 
         $cart = $this->getCart();
+        $totalVoucher = 0;
+
+        foreach($cart["cart_user_vouchers"] as $voucher) {
+            $totalVoucher = min($totalVoucher + $voucher->user_voucher->voucher->amount, $cart["subtotal"]);
+        }
 
         $pending = PendingPurchase::where("user_id", $user->id)->first();
 
@@ -79,7 +111,8 @@ class CartController extends Controller
 
         return view('checkout.checkout', [
             "cart" => $cart,
-            "pending" => $pending
+            "pending" => $pending,
+            "total_voucher" => $totalVoucher
         ]);
     }
 
@@ -148,6 +181,16 @@ class CartController extends Controller
             $cartItem->delete();
         }
 
+        $totalVoucher = 0;
+        
+        foreach($cart->vouchers as $cartVoucher) {
+            $user_voucher =  $cartVoucher->user_voucher;
+            $totalVoucher += $user_voucher->voucher->amount;
+            $cartVoucher->delete();
+            $user_voucher->delete();
+        }
+
+        $pendingPurchase->total -= $totalVoucher;
         $pendingPurchase->save();
 
         $cart->delete();
