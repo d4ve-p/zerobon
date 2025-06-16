@@ -86,7 +86,7 @@
     <div class="flex gap-4 flex-wrap">
         @foreach ($products as $product)
             <div class="flex flex-col h-[450px] px-10 py-3 items-center">
-                <img class="w-[232px] h-[277px]" src="{{ Storage::disk('product_images')->url($product->image_filename) }}"/>
+                <img class="w-[232px] h-[277px]" src="{{ asset($product->image_filename) }}"/>
                 <p class="font-semibold text-[29px]">{{ $product->name }}</p>
                 <p class="font-extralight text-[20px]">Rp.{{ $product->price }}</p>
             </div>
