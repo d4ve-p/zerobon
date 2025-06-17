@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 class ProductController extends Controller
 {
@@ -22,5 +23,15 @@ class ProductController extends Controller
         $products = Product::all()->take(3);
 
         return $products;
+    }
+
+    public function search(Request $request){
+        $search = $request->input('search');
+
+        $products = Product::where('name', 'LIKE', '%' . $search . '%')
+            ->paginate(6)
+            ->appends(['search' => $search]); // agar keyword tetap saat pagination
+
+        return view('products.products', compact('search', 'products'));
     }
 }

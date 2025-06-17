@@ -13,7 +13,7 @@
             class="hover:cursor-pointer {{ request()->routeIs("tree-fund") ? 'underline font-bold' : "" }} ">TreeFund</a>
         @auth
             <a  href="{{route("products")}}" 
-                class="hover:cursor-pointer {{ request()->routeIs("products") ? 'underline font-bold' : "" }} ">EcoMarket</a>
+                class="hover:cursor-pointer {{ request()->routeIs('products', 'products.search')? 'underline font-bold' : "" }} ">EcoMarket</a>
             <a  href="{{route("challenge")}}" 
                 class="hover:cursor-pointer {{ request()->routeIs("challenge") ? 'underline font-bold' : "" }} ">Challenge</a>
             <a href="{{ route("social-activities") }}" 
@@ -28,7 +28,10 @@
     @elsecan("isLoggedIn") --}}
     <div class="flex justify-center items-center gap-[40px]">
         @auth
-            <a class="hover:cursor-pointer" href="{{ route("carts") }}"><i class="fa-solid fa-cart-shopping fa-2x text-[var(--color-green-700)]"></i></a>
+            <a class="hover:cursor-pointer" href="{{ route("carts") }}">
+                <i class="fa-solid fa-cart-shopping fa-2x {{ request()->routeIs('carts') ? 'text-[#674636]' : 'text-[var(--color-green-700)]' }}"></i>
+            </a>
+
         @endauth
         <div class="relative">
             <i class="fa-solid fa-user fa-2x hover:cursor-pointer" id="profile" style='color: green'></i>

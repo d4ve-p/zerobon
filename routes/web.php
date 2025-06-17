@@ -78,6 +78,7 @@ Route::middleware(['auth'])->group(function() {
         })->name('edit-product');
     Route::get('products/delete/{id}', [ProductController::class, 'delete'])
         ->name('delete-product');
+    Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
 
     // Checkout
     Route::prefix('checkout')->group(function() {

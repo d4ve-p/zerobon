@@ -45,7 +45,7 @@
         <img src="{{asset("cart-empty.png")}}" class="w-[400px] h-[300px]"/>
         <p class="font-medium text-[25px] w-[523px] text-center">Start shopping now and discover the best products just for you! 
     Don't miss out—add your favorites to your bag today! </p>
-        <button class="my-[20px] text-[20px] text-white bg-[var(--color-green-700)] rounded-[20px] w-[264px] h-[56px] font-semibold hover:cursor-pointer" onclick="window.location.href='{{route("products")}}'>Back to Shopping</button>
+        <button class="my-[20px] text-[20px] text-white bg-[var(--color-green-700)] rounded-[20px] w-[264px] h-[56px] font-semibold hover:cursor-pointer" onclick="window.location.href='{{ route('products') }}'">Back to Shopping</button>
     </div>
 @else
 {{-- Else --}}
