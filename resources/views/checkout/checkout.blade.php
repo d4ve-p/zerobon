@@ -41,7 +41,7 @@
                         @if ($item->product->image_filename === null)
                             <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
                         @else
-                            <img src="{{ Storage::disk('product_images')->url($item->product->image_filename) }}" class="w-[125px] h-[150px]"/>
+                            <img src="{{ asset($item->product->image_filename) }}" class="w-[125px] h-[150px]"/>
                         @endif
 
                         <div class="flex-1 flex flex-col">
@@ -89,7 +89,7 @@
 @else
 <div class="flex flex-1 flex-col w-full h-full items-center bg-[var(--color-cream-500)]">
     <p class="py-[50px] text-[30px] font-semibold">Waiting Payment</p>
-    <div class="w-[772px] px-8 py-4 box-border bg-white flex flex-col gap-[20px] h-[403px] rounded-[15px]">
+    <div class="w-[772px] px-8 py-4 box-border bg-white flex flex-col gap-[20px] h-[403px] rounded-[15px] mb-10">
         <div class="p-4 flex justify-between w-full border-[var(--color-green-700)] border-2 rounded-[15px]">
             <p class="text-[20px]">Complete Your Payment Before</p>
             <p class="text-[20px] text-[var(--color-green-700)]">{{  \Carbon\Carbon::now('Asia/Jakarta')->addMinutes(10)->format('d F Y, H.i T') }}</p>
@@ -108,7 +108,7 @@
         </div>
         <form method="POST" action="{{ route("checkout.purchase") }}">
             @csrf
-            <input type="submit" class="text-white bg-[var(--color-green-700)] text-[22px] font-semibold w-[716px] h-[47px] rounded-[15px]" value="View Order Status" />
+            <input type="submit" class="text-white bg-[var(--color-green-700)] text-[22px] font-semibold w-[716px] h-[47px] rounded-[15px] mt-5" value="View Order Status" />
         </form>
     </div>
 </div>
