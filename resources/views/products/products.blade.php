@@ -20,7 +20,7 @@
             <div class="w-full flex flex-1 py-[40px] box-border">
                 
                 <div class="flex justify-center px-[30px]">
-                    <img class="w-[232px] h-[277px]" src="{{asset("product-placeholder.png")}}"/>
+                    <img class="w-[232px] h-[277px]" id="popup-image"/>
                 </div>
                 <div class="flex flex-col gap-[20px] flex-1">
                     <h1 id="popup-title" class="text-[29px] font-semibold">Zerobon Totebag</h1>
@@ -51,7 +51,7 @@
 
         {{-- Banner --}}
     <div class="w-full flex box-border p-10 pl-[100px] h-[592px]">
-        <img src="{{ asset('eco-market.png') }}" width="900px"/>
+        <img id="popup-image" src="{{asset("eco-market.png")}}" width="900px"/>
         <div class="flex h-full flex-1 w-full relative">
             <div class="flex items-center justify-center flex-col h-full absolute left-[-50%] top-[50%] translate-y-[-50%]">
                 <p class="text-[60px] text-[var(--color-green-700)] font-bold mb-10">Let's Shop At EcoMarket!</p>
@@ -87,7 +87,7 @@
                             <p class="font-semibold text-[29px]">{{ $product->name }}</p>
                             <p class="font-extralight text-[20px]">Rp{{ $product->price }}</p>
                         </div>
-                        <button class="bg-[var(--color-green-700)] text-white w-[264px] h-[56px] text-[20px] font-semibold rounded-[20px]" onclick="openPopup({{ $product }})">Add to bag</button>
+                        <button class="bg-[var(--color-green-700)] text-white w-[264px] h-[56px] text-[20px] font-semibold rounded-[20px]" onclick="openPopup({{ $product }}, '{{ asset(str_replace('\\', '/', $product->image_filename)) }}')">Add to bag</button>
                     </div>
                     </div>
                 @endforeach
@@ -136,16 +136,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 }) 
 
-function openPopup(item) {
+function openPopup(item, image_path) {
     // Elements
     const popupOverlay = document.getElementById("popup-overlay")
     const popupId = document.getElementById("popup-item-id")
     const popupTitle = document.getElementById("popup-title")
     const popupDescription = document.getElementById("popup-description")
+    const popupImage = document.getElementById("popup-image")
+
+
 
     popupId.value = item.id
     popupTitle.innerHTML = item.name
     popupDescription.innerHTML = item.description
+    popupImage.src = image_path
 
     popupOverlay.classList.remove("hidden")
 }
