@@ -28,7 +28,10 @@
     @elsecan("isLoggedIn") --}}
     <div class="flex justify-center items-center gap-[40px]">
         @auth
-            <a class="hover:cursor-pointer" href="{{ route("carts") }}"><i class="fa-solid fa-cart-shopping fa-2x text-[var(--color-green-700)]"></i></a>
+            <a class="hover:cursor-pointer" href="{{ route("carts") }}">
+                <i class="fa-solid fa-cart-shopping fa-2x {{ request()->routeIs('carts') ? 'text-[#674636]' : 'text-[var(--color-green-700)]' }}"></i>
+            </a>
+
         @endauth
         <div class="relative">
             <i class="fa-solid fa-user fa-2x hover:cursor-pointer" id="profile" style='color: green'></i>
