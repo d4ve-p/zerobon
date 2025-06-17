@@ -65,10 +65,12 @@
         {{-- Search Bar --}}
         <div class="h-full w-full flex flex-col items-center justify-center box-border py-[35px]">
             @csrf
-            <form method="GET">
+            <form method="GET" action="{{ route('products.search') }}">
                 <div class="flex gap-[15px] w-[822px] h-[60px] items-center justify-center box-border shadow border-solid border-2 rounded-[65px] bg-white px-5">
-                    <input type="text" class="flex-1 text-[18px] p-3 outline-none" placeholder="Search our ecoproducts..."/>
-                    <i class="fa-solid fa-magnifying-glass text-green-700"></i>
+                    <input type="text" name="search" value="{{ request('search') }}" class="flex-1 text-[18px] p-3 outline-none" placeholder="Search our ecoproducts..."/>
+                      <button type="submit">
+                        <i class="fa-solid fa-magnifying-glass text-green-700 text-[20px]"></i>
+                    </button>
                 </div>
             </form>
             

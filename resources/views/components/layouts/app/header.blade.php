@@ -13,7 +13,7 @@
             class="hover:cursor-pointer {{ request()->routeIs("tree-fund") ? 'underline font-bold' : "" }} ">TreeFund</a>
         @auth
             <a  href="{{route("products")}}" 
-                class="hover:cursor-pointer {{ request()->routeIs("products") ? 'underline font-bold' : "" }} ">EcoMarket</a>
+                class="hover:cursor-pointer {{ request()->routeIs('products', 'products.search')? 'underline font-bold' : "" }} ">EcoMarket</a>
             <a  href="{{route("challenge")}}" 
                 class="hover:cursor-pointer {{ request()->routeIs("challenge") ? 'underline font-bold' : "" }} ">Challenge</a>
             <a href="{{ route("social-activities") }}" 
