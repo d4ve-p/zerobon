@@ -41,7 +41,7 @@
                         @if ($item->product->image_filename === null)
                             <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
                         @else
-                            <img src="{{ Storage::disk('product_images')->url($item->product->image_filename) }}" class="w-[125px] h-[150px]"/>
+                            <img src="{{ asset($item->product->image_filename) }}" class="w-[125px] h-[150px]"/>
                         @endif
 
                         <div class="flex-1 flex flex-col">
