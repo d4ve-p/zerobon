@@ -82,7 +82,7 @@
                 @if ($item->product->image_filename === null)
                     <img src="{{ asset('product-placeholder.png') }}" class="w-[125px] h-[150px]"/>
                 @else
-                    <img src="{{ Storage::disk('product_images')->url($item->product->image_filename) }}" class="w-[125px] h-[150px]"/>
+                    <img src="{{($item->product->image_filename) }}" class="w-[125px] h-[150px]"/>
                 @endif
             </th>
             <th scope="row" class="px-6 py-4 font-medium box-border">
